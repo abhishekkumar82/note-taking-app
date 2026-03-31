@@ -1,0 +1,26 @@
+{
+  "name": "note-taking-app",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "@hello-pangea/dnd": "^16.6.0",
+    "@reduxjs/toolkit": "^2.11.2",
+    "@tiptap/extension-image": "^3.20.4",
+    "@tiptap/extension-task-item": "^3.20.4",
+    "@tiptap/extension-task-list": "^3.20.4",
+    "framer-motion": "^12.38.0",
+    "jspdf": "^4.2.1",
+    "mongodb": "^7.1.1",
+    "node-cron": "^4.2.1",
+    "razorpay": "^2.9.6",
+    "react-redux": "^9.2.0",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
