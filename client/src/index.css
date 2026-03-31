@@ -1,6 +1,6 @@
 /* 1. INITIAL SETUP & FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Unbounded:wght@800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 /* Default */
 :root {
   --primary: #12296c;
@@ -2544,7 +2544,7 @@ mark {
 /* ================================================================
    NOTE CARD — complete redesign (nc- prefix)
    ================================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
 
 /* ── Card shell ─────────────────────────────────────────────── */
 .nc-card {
