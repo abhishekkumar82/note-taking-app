@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Unbounded:wght@800&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  /* Use the noise background from your previous assets */
+  background-image: url('/noise-bg.png');
+  background-color: white;
+  color: #12296c; /* The primary blue from your original project */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Unbounded', cursive;
+  font-weight: 800;
+}
