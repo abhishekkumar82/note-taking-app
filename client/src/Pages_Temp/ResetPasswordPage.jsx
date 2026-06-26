@@ -106,8 +106,8 @@ const ResetPasswordPage = () => {
 };
 
 // ── styles ────────────────────────────────────────────────────────────────────
-const wrap   = {minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#f8fafc",padding:16,fontFamily:"'Inter','Segoe UI',sans-serif"};
-const card   = {background:"#fff",borderRadius:20,padding:"36px 32px 28px",width:"100%",maxWidth:400,boxShadow:"0 8px 40px rgba(0,0,0,0.1)",border:"1px solid #e2e8f0"};
+const wrap   = {minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#f5f5f7",padding:16,fontFamily:"'Inter','Segoe UI',sans-serif"};
+const card   = {background:"#fff",borderRadius:24,padding:"40px 36px 32px",width:"100%",maxWidth:420,boxShadow:"0 8px 40px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)",border:"1px solid #f0f0f0"};
 const title  = {fontSize:22,fontWeight:800,color:"#0f172a",textAlign:"center",letterSpacing:"-0.5px",marginBottom:6};
 const sub    = {fontSize:13.5,color:"#64748b",textAlign:"center",marginBottom:22,lineHeight:1.5};
 const label  = {fontSize:12.5,fontWeight:600,color:"#374151",marginBottom:5,display:"block"};

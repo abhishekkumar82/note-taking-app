@@ -200,15 +200,18 @@ const LandingPage = () => {
     },
     featureCard: {
       background: d ? "#0f172a" : "#fff",
-      border: `1px solid ${d ? "#1e293b" : "#e2e8f0"}`,
-      borderRadius: 16, padding: "28px 24px",
-      transition: "transform .2s, box-shadow .2s", cursor: "default",
+      border: `1px solid ${d ? "#1e293b" : "#f0f0f0"}`,
+      borderRadius: 18, padding: "28px 24px",
+      transition: "transform .25s cubic-bezier(0.34,1.56,0.64,1), box-shadow .2s",
+      cursor: "default",
+      boxShadow: d ? "none" : "0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
     },
     whyCard: {
       background: d ? "#0f172a" : "#fff",
-      border: `1px solid ${d ? "#1e293b" : "#e2e8f0"}`,
-      borderRadius: 14, padding: "24px 20px", textAlign: "center",
-      transition: "transform .2s",
+      border: `1px solid ${d ? "#1e293b" : "#f0f0f0"}`,
+      borderRadius: 16, padding: "28px 22px", textAlign: "center",
+      transition: "transform .25s cubic-bezier(0.34,1.56,0.64,1), box-shadow .2s",
+      boxShadow: d ? "none" : "0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)",
     },
     dot: (c) => ({ width: 10, height: 10, borderRadius: "50%", background: c }),
   };
@@ -229,11 +232,15 @@ const LandingPage = () => {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         .wu-nav-link:hover { color: #6366f1 !important; }
         .wu-btn-outline:hover { background: #eef2ff !important; }
-        .wu-feat-card:hover { transform: translateY(-4px) !important; box-shadow: 0 12px 32px rgba(99,102,241,.12) !important; }
-        .wu-why-card:hover { transform: translateY(-3px) !important; }
-        .wu-big-fill:hover { opacity:.88 !important; transform: translateY(-2px) !important; }
+        .wu-feat-card:hover { transform: translateY(-6px) !important; box-shadow: 0 16px 40px rgba(99,102,241,.15) !important; }
+        .wu-why-card:hover { transform: translateY(-4px) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important; }
+        .wu-big-fill:hover { opacity:.92 !important; transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(99,102,241,0.4) !important; }
         .wu-big-outline:hover { background: ${d ? "#1e1b4b" : "#eef2ff"} !important; }
-        .wu-cta-btn:hover { transform: translateY(-2px) !important; }
+        .wu-cta-btn:hover { transform: translateY(-3px) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important; }
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
       `}</style>
 
       {/* ── AUTH MODAL ── */}
@@ -265,18 +272,20 @@ const LandingPage = () => {
 
       {/* ── HERO ── */}
       <section style={{ padding: "100px 5vw 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#6366f118 0%,transparent 70%)",top:-100,left:"10%",pointerEvents:"none" }}/>
-        <div style={{ position:"absolute",width:400,height:400,borderRadius:"50%",background:"radial-gradient(circle,#8b5cf618 0%,transparent 70%)",top:0,right:"5%",pointerEvents:"none" }}/>
+        {/* Background glow orbs */}
+        <div style={{ position:"absolute",width:600,height:600,borderRadius:"50%",background:"radial-gradient(circle,#6366f120 0%,transparent 70%)",top:-150,left:"5%",pointerEvents:"none",filter:"blur(1px)" }}/>
+        <div style={{ position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#8b5cf620 0%,transparent 70%)",top:-50,right:"0%",pointerEvents:"none",filter:"blur(1px)" }}/>
+        <div style={{ position:"absolute",width:300,height:300,borderRadius:"50%",background:"radial-gradient(circle,#ec489920 0%,transparent 70%)",bottom:100,right:"15%",pointerEvents:"none" }}/>
 
         <div style={{ position: "relative" }}>
-          <div style={s.badge}>
-            <span style={{ width:7,height:7,borderRadius:"50%",background:"#6366f1",display:"inline-block" }}/>
+          <div style={{...s.badge, boxShadow: d ? "none" : "0 1px 8px rgba(99,102,241,0.15)"}}>
+            <span style={{ width:7,height:7,borderRadius:"50%",background:"#6366f1",display:"inline-block",boxShadow:"0 0 6px #6366f1" }}/>
             All-in-one productivity workspace
           </div>
 
           <h1 style={s.h1}>
             Organize your life,{" "}
-            <span style={{ background:"linear-gradient(135deg,#6366f1,#ec4899)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" }}>
+            <span style={{ background:"linear-gradient(135deg,#6366f1,#ec4899,#f59e0b)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundSize:"200% 200%",animation:"gradient-shift 4s ease infinite" }}>
               one note
             </span>{" "}
             at a time.
@@ -296,20 +305,25 @@ const LandingPage = () => {
           </div>
 
           {/* Stats */}
-          <div style={{ display:"flex",justifyContent:"center",gap:40,marginTop:48,flexWrap:"wrap" }}>
-            {[["10k+","Notes created"],["500+","Daily users"],["99%","Uptime"]].map(([n,l]) => (
-              <div key={n} style={{ textAlign:"center" }}>
-                <div style={{ fontSize:28,fontWeight:800,color:d?"#f1f5f9":"#0f172a" }}>{n}</div>
-                <div style={{ fontSize:13,color:d?"#94a3b8":"#64748b",marginTop:2 }}>{l}</div>
+          <div style={{ display:"flex",justifyContent:"center",gap:0,marginTop:48,flexWrap:"wrap", maxWidth:480, margin:"48px auto 0" }}>
+            {[["10k+","Notes created"],["500+","Daily users"],["99%","Uptime"]].map(([n,l], i) => (
+              <div key={n} style={{ textAlign:"center", flex:1, padding:"16px 20px", borderRight: i < 2 ? `1px solid ${d?"#1e293b":"#e5e7eb"}` : "none" }}>
+                <div style={{ fontSize:30,fontWeight:800,color:d?"#f1f5f9":"#0f172a",letterSpacing:"-1px" }}>{n}</div>
+                <div style={{ fontSize:12.5,color:d?"#94a3b8":"#64748b",marginTop:4,fontWeight:500 }}>{l}</div>
               </div>
             ))}
           </div>
 
           {/* App mockup */}
           <div id="preview" style={{
-            margin:"60px auto 0", maxWidth:860, borderRadius:20,
+            margin:"60px auto 0", maxWidth:900, borderRadius:24,
             border:`1px solid ${d?"#1e293b":"#e2e8f0"}`,
-            background:d?"#0f172a":"#f8fafc", overflow:"hidden",
+            background:d?"#0f172a":"#f5f5f7", overflow:"hidden",
+            boxShadow: d
+              ? "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)"
+              : "0 32px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06)",
+            transform: "perspective(1000px) rotateX(2deg)",
+            transformOrigin: "center top",
           }}>
             <div style={{ display:"flex",alignItems:"center",gap:6,padding:"10px 16px",background:d?"#1e293b":"#e2e8f0" }}>
               {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} style={s.dot(c)}/>)}
@@ -326,12 +340,12 @@ const LandingPage = () => {
                 ))}
               </div>
             </div>
-            <div style={{ padding:20,display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:10,background:d?"#0b0f1a":"#f8fafc" }}>
+            <div style={{ padding:20,display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(148px,1fr))",gap:12,background:d?"#0b0f1a":"#f5f5f7" }}>
               {notes.map((n,i) => (
-                <div key={i} style={{ borderRadius:10,background:d?"#1e293b":n.color,padding:"12px 12px 9px",border:`1px solid ${d?"#334155":"rgba(0,0,0,0.06)"}` }}>
-                  <div style={{ fontSize:12.5,fontWeight:700,color:d?"#f1f5f9":"#1e293b",marginBottom:5 }}>{n.title}</div>
-                  <div style={{ fontSize:11,color:d?"#94a3b8":"#475569",lineHeight:1.5,marginBottom:8 }}>{n.body}</div>
-                  <span style={{ fontSize:10,padding:"2px 7px",borderRadius:10,background:"rgba(99,102,241,.12)",color:"#6366f1",fontWeight:600 }}>{n.tag}</span>
+                <div key={i} style={{ borderRadius:14,background:d?"#1e293b":n.color,padding:"14px 13px 10px",border:`1px solid ${d?"#334155":"rgba(0,0,0,0.05)"}`, boxShadow: d ? "none" : "0 1px 4px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)", transition:"transform .2s" }}>
+                  <div style={{ fontSize:13,fontWeight:700,color:d?"#f1f5f9":"#111827",marginBottom:6,letterSpacing:"-0.01em" }}>{n.title}</div>
+                  <div style={{ fontSize:11.5,color:d?"#94a3b8":"#4b5563",lineHeight:1.55,marginBottom:10 }}>{n.body}</div>
+                  <span style={{ fontSize:10,padding:"2px 8px",borderRadius:12,background:"rgba(99,102,241,.13)",color:"#6366f1",fontWeight:700,letterSpacing:"0.01em" }}>{n.tag}</span>
                 </div>
               ))}
             </div>

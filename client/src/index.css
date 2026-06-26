@@ -1,4 +1,5 @@
 /* 1. INITIAL SETUP & FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Unbounded:wght@800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 /* Default */
@@ -5903,4 +5904,3312 @@ body.dark .cp-trigger kbd { background: #334155; color: #94a3b8; border-color: #
 @media (max-width: 640px) {
   .cp-trigger-label { display: none; }
   .cp-trigger { padding: 7px 10px; }
+}
+
+
+/* ================================================================
+   DESIGN SYSTEM v2 — Premium Redesign
+   Inspired by Linear, Notion, Google Keep, Apple
+   ================================================================ */
+
+/* ── 1. DESIGN TOKENS ─────────────────────────────────────────── */
+:root {
+  --primary-blue:  #4f46e5;   /* indigo — replaces old dark navy */
+  --accent-blue:   #6366f1;
+  --accent-violet: #8b5cf6;
+  --bg-white:      #ffffff;
+  --bg-light:      #f5f5f7;   /* Apple-style warm off-white */
+  --bg-surface:    #fafafa;
+  --text-main:     #111827;
+  --text-muted:    #6b7280;
+  --text-faint:    #9ca3af;
+  --border-color:  #e5e7eb;
+  --border-subtle: #f3f4f6;
+  --card-shadow:   0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 4px 12px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.10);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+.dark {
+  --bg-white:   #111827;
+  --bg-light:   #0f172a;
+  --bg-surface: #1e293b;
+  --text-main:  #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+  --border-color:  #1e293b;
+  --border-subtle: #1e293b;
+  --card-shadow:   0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.25);
+  --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ── 2. BODY & GLOBAL ─────────────────────────────────────────── */
+body {
+  font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+  background-color: var(--bg-light);
+  background-image: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 3. HEADER ────────────────────────────────────────────────── */
+.main-header {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+  padding: 0 1.5rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.dark .main-header {
+  background: rgba(17, 24, 39, 0.88);
+  border-bottom-color: rgba(30, 41, 59, 0.8);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Logo */
+.logo-text {
+  font-family: 'Unbounded', cursive;
+  font-weight: 800;
+  font-size: 1.3rem;
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+/* Search bar */
+.header-search-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 520px;
+}
+
+.search-input,
+.smart-search-input {
+  background: #f3f4f6 !important;
+  border: 1.5px solid transparent !important;
+  border-radius: 12px !important;
+  font-size: 0.875rem !important;
+  color: var(--text-main) !important;
+  transition: all 0.2s !important;
+}
+
+.search-input:focus,
+.smart-search-input:focus {
+  background: #fff !important;
+  border-color: var(--accent-blue) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+}
+
+.dark .search-input,
+.dark .smart-search-input {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+/* User nav */
+.user-greeting {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.theme-btn, .hamburger-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.theme-btn:hover, .hamburger-btn:hover {
+  background: var(--border-color);
+  color: var(--text-main);
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  transition: all 0.15s;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+/* ── 4. MAIN CONTENT AREA ─────────────────────────────────────── */
+.main-fullwidth {
+  padding: 32px 40px;
+  min-height: calc(100vh - 60px);
+  background: var(--bg-light);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dark .main-fullwidth {
+  background: var(--bg-light);
+}
+
+@media (max-width: 768px) {
+  .main-fullwidth { padding: 16px; }
+}
+
+/* ── 5. ADD NOTE TRIGGER ──────────────────────────────────────── */
+.add-note-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto 28px;
+  padding: 16px 22px;
+  background: #fff;
+  border: 1.5px solid var(--border-color);
+  border-radius: 16px;
+  font-size: 0.9rem;
+  color: var(--text-faint);
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.add-note-trigger:hover {
+  border-color: var(--accent-blue);
+  box-shadow: var(--card-shadow-hover), 0 0 0 3px rgba(99,102,241,0.08);
+  color: var(--text-muted);
+  transform: translateY(-1px);
+}
+
+.add-note-trigger svg {
+  color: var(--accent-blue);
+  flex-shrink: 0;
+}
+
+.dark .add-note-trigger {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+  color: var(--text-faint);
+}
+
+/* ── 6. SECTION HEADER ────────────────────────────────────────── */
+.section-header-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 2px;
+}
+
+.section-title {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.notes-group-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 20px 0 10px 2px;
+}
+
+/* ── 7. TAG PILLS ─────────────────────────────────────────────── */
+.tag-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.tag-pill {
+  padding: 5px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.tag-pill:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: #eef2ff;
+}
+
+.tag-pill.active {
+  background: var(--accent-blue);
+  color: #fff;
+  border-color: var(--accent-blue);
+  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+
+.dark .tag-pill {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.dark .tag-pill.active {
+  background: var(--accent-blue);
+}
+
+/* ── 8. NOTES GRID ────────────────────────────────────────────── */
+.notes-grid-new {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+  .notes-grid-new {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+}
+
+/* ── 9. NOTE CARDS (nc- redesign) ────────────────────────────── */
+.nc-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+  cursor: default;
+  min-height: 140px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.nc-card:hover {
+  transform: translateY(-3px) scale(1.005);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.09), 0 12px 36px rgba(0,0,0,0.07);
+  border-color: rgba(99,102,241,0.15);
+  z-index: 2;
+}
+
+.dark .nc-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.dark .nc-card:hover {
+  border-color: rgba(99,102,241,0.3);
+}
+
+/* Pinned card accent */
+.nc-card.nc-pinned {
+  border-color: rgba(251,191,36,0.4);
+  box-shadow: 0 1px 3px rgba(251,191,36,0.1), 0 4px 16px rgba(251,191,36,0.08);
+}
+
+.nc-card.nc-pinned:hover {
+  border-color: rgba(251,191,36,0.6);
+  box-shadow: 0 4px 16px rgba(251,191,36,0.15), 0 12px 36px rgba(251,191,36,0.1);
+}
+
+.nc-pin-strip {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+  border-radius: 16px 16px 0 0;
+}
+
+/* Actions bar */
+.nc-actions {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 6px 8px 2px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  position: relative;
+  z-index: 10;
+  justify-content: flex-end;
+  min-height: 34px;
+}
+
+.nc-card:hover .nc-actions { opacity: 1; }
+
+.nc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+
+.nc-btn:hover {
+  background: rgba(99,102,241,0.08);
+  color: var(--accent-blue);
+}
+
+.nc-btn--active { color: #f59e0b; }
+.nc-btn--danger:hover { background: #fef2f2; color: #ef4444; }
+.nc-btn--restore:hover { background: #f0fdf4; color: #16a34a; }
+
+/* Card body */
+.nc-body {
+  padding: 4px 14px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nc-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: -0.01em;
+}
+
+.nc-content {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Tags */
+.nc-tag {
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dark .nc-tag {
+  background: rgba(99,102,241,0.15);
+  color: #a5b4fc;
+}
+
+/* Footer */
+.nc-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 10px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: auto;
+}
+
+.dark .nc-footer { border-top-color: var(--border-color); }
+
+.nc-date {
+  font-size: 0.69rem;
+  color: var(--text-faint);
+  margin-right: auto;
+  letter-spacing: 0.01em;
+}
+
+.nc-done-btn {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.nc-done-btn:hover {
+  background: #f0fdf4;
+  color: #16a34a;
+  border-color: #86efac;
+}
+
+/* Export dropdown */
+.nc-export-menu {
+  position: absolute;
+  top: 32px; right: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.03);
+  z-index: 30;
+  min-width: 130px;
+  overflow: hidden;
+  animation: nc-menu-in 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.dark .nc-export-menu {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.nc-export-menu button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 9px 13px;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.nc-export-menu button:hover { background: #f5f5f7; }
+.dark .nc-export-menu button:hover { background: #334155; }
+
+/* ── 10. SIDEBAR ──────────────────────────────────────────────── */
+.hamburger-sidebar {
+  background: #fff;
+  border-right: 1px solid var(--border-subtle);
+  box-shadow: 4px 0 40px rgba(0,0,0,0.08);
+}
+
+.dark .hamburger-sidebar {
+  background: #111827;
+  border-right-color: #1e293b;
+}
+
+.hs-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dark .hs-header { border-bottom-color: #1e293b; }
+
+.hs-brand {
+  font-family: 'Unbounded', cursive;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hs-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.hs-item:hover {
+  background: #f5f5f7;
+  color: var(--text-main);
+}
+
+.dark .hs-item:hover {
+  background: #1e293b;
+}
+
+.hs-item--active {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  font-weight: 600;
+}
+
+.dark .hs-item--active {
+  background: rgba(79,70,229,0.15) !important;
+  color: #a5b4fc !important;
+}
+
+.hs-folder-item.active {
+  background: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.dark .hs-folder-item.active {
+  background: rgba(79,70,229,0.15);
+  color: #a5b4fc;
+}
+
+.hs-badge {
+  margin-left: auto;
+  background: var(--accent-blue);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 20px;
+}
+
+/* ── 11. LOADING SCREEN ───────────────────────────────────────── */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+  color: var(--text-muted);
+  background: var(--bg-light);
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* ── 12. EMPTY STATE ──────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-faint);
+  font-size: 0.9rem;
+}
+
+.empty-state::before {
+  content: '📝';
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* ── 13. MODAL OVERLAYS ───────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 28px;
+  border-radius: 20px;
+  width: 400px;
+  max-width: 100%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  animation: scaleIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.dark .modal-box {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+  color: white;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.btn-confirm:hover { opacity: 0.88; }
+
+.btn-cancel {
+  background: var(--bg-light);
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn-cancel:hover { background: var(--border-color); }
+
+/* PIN modal */
+.glass-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.glass-modal {
+  width: 340px;
+  padding: 32px 28px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  text-align: center;
+  animation: slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.dark .glass-modal {
+  background: rgba(30,41,59,0.95);
+  border-color: rgba(51,65,85,0.5);
+}
+
+.glass-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.glass-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.glass-btn.confirm {
+  background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+  color: white;
+  border: none;
+}
+
+.glass-btn.confirm:hover { opacity: 0.88; }
+
+.dot {
+  background: rgba(99,102,241,0.1);
+  border: 2px solid rgba(99,102,241,0.2);
+  color: #4f46e5;
+}
+
+/* ── 14. TOASTS ───────────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  top: unset;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.toast-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 280px;
+  max-width: 360px;
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 12px 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  animation: slideInRight 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.toast-success { border-left: 3px solid #22c55e; }
+.toast-error   { border-left: 3px solid #ef4444; }
+.toast-info    { border-left: 3px solid #6366f1; }
+
+.toast-left { font-size: 1rem; }
+
+.toast-message {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+.toast-close {
+  cursor: pointer;
+  opacity: 0.5;
+  font-size: 0.85rem;
+  transition: opacity 0.15s;
+}
+
+.toast-close:hover { opacity: 1; }
+
+.toast-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  animation: progress 2.5s linear forwards;
+}
+
+.toast-success .toast-bar { background: #22c55e; }
+.toast-error .toast-bar   { background: #ef4444; }
+.toast-info .toast-bar    { background: #6366f1; }
+
+.toast-undo {
+  margin-left: 8px;
+  background: rgba(99,102,241,0.2);
+  border: 1px solid rgba(99,102,241,0.3);
+  color: #a5b4fc;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+
+.toast-undo:hover {
+  background: rgba(99,102,241,0.3);
+  color: #c7d2fe;
+}
+
+/* ── 15. ADD NOTE CARD (form) ─────────────────────────────────── */
+.add-note-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border: 1px solid var(--border-subtle);
+  transition: box-shadow 0.2s;
+}
+
+.dark .add-note-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.add-note-card:hover {
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+
+.note-input-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  padding: 9px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(79,70,229,0.35);
+}
+
+/* ── 16. TAGS in notes ────────────────────────────────────────── */
+.tag {
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.dark .tag {
+  background: rgba(99,102,241,0.15);
+  color: #a5b4fc;
+}
+
+/* ── 17. EDITOR TOOLBAR ───────────────────────────────────────── */
+.editor-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.editor-toolbar button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 7px;
+  background: #f3f4f6;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all 0.12s;
+}
+
+.editor-toolbar button:hover {
+  background: #eef2ff;
+  color: var(--accent-blue);
+}
+
+.editor-toolbar button.is-active {
+  background: #eef2ff;
+  color: var(--accent-blue);
+}
+
+/* ── 18. SECTION SUBTITLE ─────────────────────────────────────── */
+.section-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+/* ── 19. PREMIUM BADGE ─────────────────────────────────────────── */
+/* (already styled inline in Header — keep for consistency) */
+
+/* ── 20. FOLDER SELECT in AddNote ─────────────────────────────── */
+.folder-select {
+  border: 1.5px solid var(--border-color);
+  background: #f9fafb;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.folder-select:focus {
+  border-color: var(--accent-blue);
+}
+
+/* ── 21. OFFLINE INDICATOR ────────────────────────────────────── */
+.offline-banner {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+/* ── 22. ANIMATIONS ────────────────────────────────────────────── */
+@keyframes nc-menu-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes progress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+/* ── 23. NOTE CARD COLOR BACKGROUNDS ─────────────────────────── */
+/* When a note has a custom background, keep text readable */
+.nc-card[style*="background"] .nc-title { color: inherit; }
+.nc-card[style*="background"] .nc-content { color: inherit; opacity: 0.8; }
+.nc-card[style*="background"] .nc-footer { border-top-color: rgba(0,0,0,0.08); }
+.nc-card[style*="background"] .nc-tag {
+  background: rgba(0,0,0,0.08);
+  color: inherit;
+}
+
+/* ── 24. RESPONSIVE HEADER ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  .logo-text { font-size: 1.1rem; }
+  .logo-img  { width: 28px; height: 28px; }
+  .user-greeting { display: none; }
+  .user-nav { gap: 4px; }
+}
+
+/* ── 25. SMOOTH CARD ADD ANIMATION ─────────────────────────────── */
+.nc-card.adding {
+  animation: cardIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.nc-card.removing {
+  animation: cardOut 0.2s ease forwards;
+}
+
+@keyframes cardOut {
+  to { opacity: 0; transform: scale(0.92); }
+}
+
+/* ── 26. HEADER SEARCH TOOLS (flex wrapper) ─────────────────────── */
+.header-search-tools {
+  flex: 1;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 27. DIARY PAGE IMPROVEMENTS ─────────────────────────────────── */
+.main-fullwidth.diary-bg,
+.diary-bg {
+  background: linear-gradient(135deg, #fffbf5 0%, #fdf6ef 100%) !important;
+  padding: 0 !important;
+}
+
+.dark .diary-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #111827 100%) !important;
+}
+
+
+/* ================================================================
+   CONSISTENCY PATCH — Unifies ALL pages to the Design System v2
+   Primary: #4f46e5 (indigo)  |  Gradient: linear-gradient(135deg,#4f46e5,#7c3aed)
+   ================================================================ */
+
+/* ── UNIFIED DESIGN TOKENS (override any old values) ─────────────
+   These cascade-kill any earlier :root definitions.              */
+:root {
+  --primary:        #4f46e5;
+  --primary-blue:   #4f46e5;
+  --accent-blue:    #6366f1;
+  --accent-violet:  #7c3aed;
+  --gradient-btn:   linear-gradient(135deg, #4f46e5, #7c3aed);
+  --danger:         #ef4444;
+  --success:        #22c55e;
+  --warning:        #f59e0b;
+  --focus-ring:     0 0 0 3px rgba(99,102,241,0.2);
+  --focus-border:   #6366f1;
+}
+
+/* ── GLOBAL INPUT FOCUS RING ──────────────────────────────────── */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--focus-border) !important;
+  box-shadow: var(--focus-ring) !important;
+}
+
+/* ── UNIFIED PRIMARY BUTTON ───────────────────────────────────── */
+/* Applies to: Save, Submit, Primary Action */
+.btn-submit,
+.an-save-btn,
+.diary-save-btn,
+.diary-new-btn,
+.ht-add-btn,
+.an-rp-save,
+.ht-form-save,
+.diary-pin-btn,
+.save-btn {
+  background: var(--gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s !important;
+}
+
+.btn-submit:hover,
+.an-save-btn:hover,
+.diary-save-btn:hover:not(:disabled),
+.diary-new-btn:hover,
+.ht-add-btn:hover,
+.an-rp-save:hover,
+.ht-form-save:hover,
+.diary-pin-btn:hover,
+.save-btn:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35) !important;
+}
+
+/* ── UNIFIED SECONDARY BUTTON ─────────────────────────────────── */
+.btn-cancel,
+.an-rp-clear,
+.ht-form-cancel,
+.diary-view-btn {
+  background: var(--bg-light) !important;
+  border: 1.5px solid var(--border-color) !important;
+  color: var(--text-muted) !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+
+.btn-cancel:hover,
+.an-rp-clear:hover,
+.ht-form-cancel:hover,
+.diary-view-btn:hover {
+  background: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+/* ── UNIFIED ICON BUTTON ACTIVE STATE ────────────────────────── */
+.an-icon-btn--active,
+.diary-icon-btn.active {
+  color: var(--primary) !important;
+  background: rgba(99,102,241,0.08) !important;
+}
+
+.an-icon-btn:hover,
+.diary-icon-btn:hover {
+  background: rgba(99,102,241,0.06) !important;
+  color: var(--primary) !important;
+}
+
+/* ── UNIFIED COLOR SWATCH ACTIVE ──────────────────────────────── */
+.an-cp-swatch--active {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.3) !important;
+}
+
+.diary-cp-swatch.active {
+  box-shadow: 0 0 0 2.5px var(--primary) !important;
+}
+
+/* ── ADD NOTE CARD — refined ──────────────────────────────────── */
+.an-wrap {
+  max-width: 680px;
+  margin: 0 auto 28px;
+}
+
+.an-card {
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.06);
+  overflow: visible;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.an-card:focus-within,
+.an-card--expanded {
+  box-shadow: 0 4px 28px rgba(99,102,241,0.12), 0 1px 4px rgba(0,0,0,0.06);
+  border-color: rgba(99,102,241,0.2);
+}
+
+.dark .an-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.an-collapsed {
+  padding: 16px 20px;
+}
+
+.an-collapsed-placeholder {
+  color: var(--text-faint);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.an-title-input {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.an-tags-input {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.an-tags-input::placeholder {
+  color: var(--text-faint);
+}
+
+.an-toolbar {
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 6px 18px;
+  background: var(--bg-surface);
+}
+
+.an-tb-btn {
+  border-radius: 7px;
+  padding: 6px 8px;
+  color: var(--text-faint);
+}
+
+.an-tb-btn:hover,
+.an-tb-btn.active {
+  background: rgba(99,102,241,0.08) !important;
+  color: var(--primary) !important;
+}
+
+.an-editor {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-main);
+  padding: 10px 20px;
+  min-height: 100px;
+}
+
+.an-bottom-bar {
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.an-save-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 9px 20px !important;
+  font-size: 0.875rem !important;
+  border-radius: 10px !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── EDIT NOTE MODAL — refined ────────────────────────────────── */
+.modal-container.enm-container {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+  border: 1px solid var(--border-subtle);
+  max-width: 720px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.dark .modal-container.enm-container {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.enm-header {
+  padding: 16px 20px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dark .enm-header { border-color: var(--border-color); }
+
+.enm-title-input {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding: 12px 20px 6px;
+  color: var(--text-main);
+}
+
+.enm-toolbar {
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  padding: 6px 18px;
+}
+
+.dark .enm-toolbar { border-color: var(--border-color); }
+
+.enm-editor {
+  padding: 10px 20px;
+  min-height: 160px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.enm-bottom-bar {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.dark .enm-bottom-bar { border-color: var(--border-color); }
+
+/* ── AI TOOLS PANEL — refined ────────────────────────────────── */
+.ai-panel {
+  border-radius: 14px;
+  border: 1px solid rgba(99,102,241,0.15);
+  background: var(--bg-white);
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.ai-panel-toggle {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: opacity 0.15s;
+}
+
+.ai-panel-body {
+  background: #fafaff;
+  border-top: 1px solid rgba(99,102,241,0.12);
+  padding: 14px;
+}
+
+.ai-tool-btn {
+  background: #fff;
+  border: 1.5px solid rgba(99,102,241,0.2);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+
+.ai-tool-btn:hover:not(:disabled) {
+  background: #eef2ff;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.2);
+}
+
+.ai-tool-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.ai-apply-btn {
+  background: var(--gradient-btn);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.ai-apply-btn:hover { opacity: 0.88; }
+
+.ai-lang-select {
+  border: 1.5px solid rgba(99,102,241,0.3);
+  border-radius: 7px;
+  color: var(--primary);
+  background: #fff;
+  font-size: 0.72rem;
+}
+
+.dark .ai-panel { border-color: rgba(99,102,241,0.2); }
+.dark .ai-panel-body { background: rgba(79,70,229,0.05); border-color: rgba(99,102,241,0.15); }
+.dark .ai-tool-btn { background: var(--bg-surface); border-color: rgba(99,102,241,0.2); }
+.dark .ai-tool-btn:hover:not(:disabled) { background: rgba(99,102,241,0.12); border-color: var(--primary); }
+.dark .ai-lang-select { background: var(--bg-surface); color: #a5b4fc; }
+
+/* ── HABIT TRACKER — refined ──────────────────────────────────── */
+.ht-add-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 20px !important;
+  font-size: 0.875rem !important;
+  border-radius: 12px !important;
+}
+
+.ht-title {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ht-form-card {
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  border: 1px solid var(--border-subtle);
+}
+
+.dark .ht-form-card { border-color: var(--border-color); }
+
+.ht-form-input {
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-light);
+  color: var(--text-main);
+  font-family: inherit;
+}
+
+.ht-form-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
+}
+
+.ht-form-select {
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-light);
+  color: var(--text-main);
+}
+
+.ht-form-save {
+  padding: 9px 20px !important;
+  border-radius: 10px !important;
+}
+
+.ht-stat {
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.dark .ht-stat { border-color: var(--border-color); }
+
+.ht-habit-card {
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: all 0.2s;
+}
+
+.ht-habit-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+  transform: translateY(-1px);
+}
+
+.ht-check-btn {
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  transition: all 0.15s;
+}
+
+.ht-check--done:hover   { border-color: var(--success) !important; color: var(--success) !important; }
+.ht-check--miss:hover   { border-color: var(--danger) !important; color: var(--danger) !important; }
+.ht-check--done.active  { border-color: var(--success) !important; color: var(--success) !important; background: #f0fdf4 !important; }
+.ht-check--miss.active  { border-color: var(--danger) !important; color: var(--danger) !important; background: #fff5f5 !important; }
+
+.ht-tabs {
+  background: var(--bg-light);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.ht-tab {
+  border-radius: 11px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.ht-tab.active {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.dark .ht-tab.active {
+  background: var(--bg-surface);
+  color: #a5b4fc;
+}
+
+.ht-chart-card {
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.dark .ht-chart-card { border-color: var(--border-color); }
+
+.ht-progress-track {
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.ht-progress-fill {
+  background: var(--gradient-btn) !important;
+  border-radius: 10px;
+}
+
+.ht-calendar-wrap {
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.dark .ht-calendar-wrap { border-color: var(--border-color); }
+
+/* ── DIARY PAGE — refined ────────────────────────────────────── */
+.diary-write-col {
+  padding: 32px 40px;
+}
+
+.diary-write-header {
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.diary-title-input {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+}
+
+.diary-toolbar button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-white);
+  color: var(--text-muted);
+  transition: all 0.12s;
+}
+
+.diary-toolbar button:hover,
+.diary-toolbar button.active {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+}
+
+.diary-editor-wrap {
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.85);
+}
+
+.dark .diary-editor-wrap {
+  background: rgba(30,41,59,0.7);
+  border-color: var(--border-color);
+}
+
+.diary-save-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 10px 22px !important;
+  font-size: 0.875rem !important;
+  border-radius: 12px !important;
+}
+
+.diary-new-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  border-radius: 10px !important;
+  font-size: 0.82rem !important;
+}
+
+.diary-icon-btn {
+  border-radius: 10px !important;
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.diary-mood-btn {
+  border-radius: 10px !important;
+  width: 36px !important;
+  height: 36px !important;
+  background: var(--bg-light) !important;
+  border: 1.5px solid transparent !important;
+}
+
+.diary-mood-btn:hover {
+  border-color: var(--border-color) !important;
+  transform: scale(1.12) !important;
+}
+
+.diary-mood-btn.active {
+  border-color: var(--primary) !important;
+  background: #eef2ff !important;
+  transform: scale(1.08) !important;
+}
+
+.dark .diary-mood-btn { background: var(--bg-surface) !important; }
+
+.diary-entry-card {
+  border-radius: 14px;
+  padding: 12px 14px;
+  transition: all 0.15s;
+}
+
+.diary-entry-card:hover {
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  transform: translateX(2px);
+}
+
+.dark .diary-entry-card:hover {
+  background: var(--bg-surface);
+}
+
+.dec-num {
+  color: var(--primary) !important;
+}
+
+/* ── COMMAND PALETTE — refined ───────────────────────────────── */
+.cp-panel {
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.05),
+    0 24px 80px rgba(0,0,0,0.18),
+    0 8px 32px rgba(99,102,241,0.10);
+}
+
+.cp-search-icon { color: var(--primary); }
+
+.cp-input {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cp-item--selected {
+  background: #eef2ff !important;
+  border-color: rgba(99,102,241,0.25) !important;
+}
+
+.cp-item--selected .cp-action-icon {
+  background: #eef2ff;
+  border-color: rgba(99,102,241,0.3);
+}
+
+.cp-item--selected .cp-kbd {
+  background: #c7d2fe;
+  color: var(--primary);
+  border-color: #a5b4fc;
+}
+
+/* ── TEMPLATE PICKER — refined ───────────────────────────────── */
+/* Uses inline styles — enhance via global reset on modals */
+/* Handled by TemplatePickerModal S.modal — already modern */
+
+/* ── SIDEBAR DROPDOWN ITEMS — folder active in indigo ───────── */
+.hs-folder-item.active {
+  background: #eef2ff !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+.dark .hs-folder-item.active {
+  background: rgba(79,70,229,0.15) !important;
+  color: #a5b4fc !important;
+}
+
+.hs-item--active {
+  background: #eef2ff !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+.dark .hs-item--active {
+  background: rgba(79,70,229,0.15) !important;
+  color: #a5b4fc !important;
+}
+
+/* ── TIPTAP EDITOR (shared) ──────────────────────────────────── */
+.tiptap-editor,
+.an-editor,
+.enm-editor {
+  font-family: 'Inter', 'Poppins', sans-serif !important;
+}
+
+.tiptap-editor .ProseMirror,
+.an-editor .ProseMirror,
+.enm-editor .ProseMirror {
+  outline: none !important;
+}
+
+.tiptap-editor .ProseMirror h1,
+.an-editor .ProseMirror h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.02em; }
+.tiptap-editor .ProseMirror h2,
+.an-editor .ProseMirror h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+.tiptap-editor .ProseMirror p { margin-bottom: 6px; }
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol { padding-left: 20px; margin-bottom: 8px; }
+.tiptap-editor .ProseMirror li { margin-bottom: 2px; }
+.tiptap-editor .ProseMirror code { background: #f1f5f9; border-radius: 5px; padding: 1px 6px; font-size: 0.85em; color: var(--primary); }
+.tiptap-editor .ProseMirror pre { background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 14px; overflow-x: auto; font-size: 0.85rem; }
+.tiptap-editor .ProseMirror blockquote { border-left: 3px solid var(--primary); padding-left: 12px; color: var(--text-muted); font-style: italic; }
+.an-editor .ProseMirror code { background: #f1f5f9; border-radius: 5px; padding: 1px 6px; font-size: 0.85em; color: var(--primary); }
+
+/* Task list */
+.tiptap-editor .ProseMirror ul[data-type="taskList"] { list-style: none; padding-left: 0; }
+.tiptap-editor .ProseMirror ul[data-type="taskList"] li { display: flex; align-items: flex-start; gap: 8px; }
+.an-editor .ProseMirror ul[data-type="taskList"] { list-style: none; padding-left: 0; }
+.an-editor .ProseMirror ul[data-type="taskList"] li { display: flex; align-items: flex-start; gap: 8px; }
+
+/* ── OFFLINE INDICATOR — refined ──────────────────────────────── */
+/* Inline-styled, keep color palette consistent */
+/* No changes needed — already uses status-appropriate colors     */
+
+/* ── REMINDER / NL INPUT — consistent with system ────────────── */
+/* NaturalLanguageReminderInput uses inline S.* styles — fine     */
+/* Color: #6366f1 already = var(--accent-blue) ✓                  */
+
+/* ── COLLAB SHARE MODAL — consistent ─────────────────────────── */
+/* CollabShareModal uses inline S.* styles — already matches:     */
+/*   primaryBtn: linear-gradient(135deg,#6366f1,#8b5cf6) ✓       */
+/*   toggleActive: #eef2ff/#6366f1 ✓                             */
+
+/* ── REMINDER CHIP — refined ──────────────────────────────────── */
+.an-reminder-chip {
+  background: #eef2ff;
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(99,102,241,0.2);
+}
+
+.an-chip-repeat {
+  background: #c7d2fe;
+  color: var(--primary);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.dark .an-reminder-chip {
+  background: rgba(99,102,241,0.15);
+  color: #a5b4fc;
+  border-color: rgba(99,102,241,0.2);
+}
+
+/* ── FOLDER SELECT ───────────────────────────────────────────── */
+.an-folder-select {
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-light);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 5px 28px 5px 12px;
+  transition: border-color 0.15s;
+}
+
+.an-folder-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
+}
+
+/* ── SCROLLBARS — consistent, subtle ────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+.dark * { scrollbar-color: #334155 transparent; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── SECTION LABELS — consistent upper-case style ─────────────── */
+.notes-group-label,
+.section-title,
+.diary-month-label,
+.ht-chart-title {
+  font-family: 'Inter', 'Poppins', sans-serif;
+  letter-spacing: 0.08em;
+}
+
+/* ── EMPTY STATES — consistent ────────────────────────────────── */
+.ht-empty,
+.diary-empty,
+.diary-loading,
+.cp-empty {
+  color: var(--text-faint);
+}
+
+/* ── MARK (search highlight) — consistent ─────────────────────── */
+mark {
+  background: rgba(99,102,241,0.18);
+  color: var(--primary);
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* ── PROGRESS BARS — consistent ──────────────────────────────── */
+.progress-bar,
+.ht-progress-track,
+.nc-progress {
+  background: var(--border-color);
+  border-radius: 6px;
+}
+
+/* ── CARD SHADOWS — consistent ────────────────────────────────── */
+.ht-stat,
+.ht-progress-card,
+.ht-form-card,
+.ht-chart-card,
+.ht-calendar-wrap,
+.ht-habit-card,
+.an-card,
+.nc-card,
+.add-note-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* ── DARK MODE GLOBAL FIXES ──────────────────────────────────── */
+.dark .an-toolbar,
+.dark .enm-toolbar {
+  background: rgba(255,255,255,0.03) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .an-bottom-bar,
+.dark .enm-bottom-bar {
+  background: rgba(255,255,255,0.02);
+  border-color: var(--border-color);
+}
+
+.dark .ai-panel-body {
+  background: rgba(99,102,241,0.04);
+}
+
+/* ── BODY BACKGROUND — unified warm off-white ─────────────────── */
+body {
+  background-color: #f5f5f7;
+  background-image: none;
+}
+
+.dark body,
+body.dark {
+  background-color: #0f172a;
+}
+
+/* ── TRANSITION SMOOTHING ─────────────────────────────────────── */
+.nc-card,
+.ht-habit-card,
+.diary-entry-card,
+.an-card,
+.hs-item,
+.hs-folder-item,
+.tag-pill,
+.an-tb-btn,
+.nc-btn {
+  will-change: transform;
+}
+
+/* ── RESET OLD CONFLICTING VALUES ─────────────────────────────── */
+.ht-add-btn {
+  background: var(--gradient-btn) !important;
+  box-shadow: none;
+}
+
+.ht-add-btn:hover {
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Kill old dark navy buttons */
+.an-save-btn,
+.diary-new-btn,
+.diary-save-btn {
+  background: var(--gradient-btn) !important;
+}
+
+/* Kill old blue focus color */
+.diary-cp-swatch.active,
+.diary-icon-btn.active {
+  color: var(--primary) !important;
+}
+
+/* Remove old background-image noise */
+body {
+  background-image: none !important;
+}
+
+
+/* ================================================================
+   HABIT TRACKER — Full Visual Overhaul
+   ================================================================ */
+
+/* ── Shell & Header ───────────────────────────────────────────── */
+.ht-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 0 64px;
+}
+
+.ht-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+}
+
+.ht-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.ht-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+.ht-add-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 11px 22px !important;
+  background: var(--gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.3) !important;
+  transition: all 0.2s !important;
+}
+
+.ht-add-btn:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(99,102,241,0.4) !important;
+}
+
+/* ── Add Habit Form Card ──────────────────────────────────────── */
+.ht-form-card {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: ht-form-in 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes ht-form-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dark .ht-form-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-form-input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  background: var(--bg-light);
+  color: var(--text-main);
+  transition: all 0.15s;
+}
+
+.ht-form-input:focus {
+  border-color: var(--primary) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
+}
+
+.ht-form-input::placeholder {
+  color: var(--text-faint);
+}
+
+.dark .ht-form-input {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border-color);
+}
+
+.ht-form-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ht-form-select {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-light);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+  appearance: auto;
+}
+
+.ht-form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
+}
+
+/* Color dots row */
+.ht-color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ht-color-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.ht-color-dot:hover {
+  transform: scale(1.18);
+}
+
+.ht-color-dot.selected {
+  border-color: var(--text-main);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px currentColor;
+}
+
+/* Form action buttons */
+.ht-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.dark .ht-form-actions { border-top-color: var(--border-color); }
+
+.ht-form-cancel {
+  padding: 9px 18px !important;
+  background: var(--bg-light) !important;
+  border: 1.5px solid var(--border-color) !important;
+  color: var(--text-muted) !important;
+  border-radius: 10px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+}
+
+.ht-form-cancel:hover {
+  background: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.ht-form-save {
+  padding: 9px 22px !important;
+  background: var(--gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+  box-shadow: 0 3px 10px rgba(99,102,241,0.28) !important;
+}
+
+.ht-form-save:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 16px rgba(99,102,241,0.4) !important;
+}
+
+/* ── Progress Card ────────────────────────────────────────────── */
+.ht-progress-card {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+}
+
+.dark .ht-progress-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.ht-progress-pct {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+.ht-progress-track {
+  height: 10px;
+  background: var(--bg-light);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.dark .ht-progress-track {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--border-color);
+}
+
+.ht-progress-fill {
+  height: 100%;
+  background: var(--gradient-btn) !important;
+  border-radius: 20px;
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+
+.ht-progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  border-radius: inherit;
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────── */
+.ht-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 24px;
+  background: var(--bg-light);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 5px;
+  width: fit-content;
+}
+
+.dark .ht-tabs {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-tab {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-faint);
+  transition: all 0.18s;
+  font-family: inherit;
+}
+
+.ht-tab:hover {
+  color: var(--text-muted);
+  background: rgba(99,102,241,0.06);
+}
+
+.ht-tab.active {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.dark .ht-tab.active {
+  background: var(--bg-light);
+  color: #a5b4fc;
+  box-shadow: none;
+}
+
+/* ── Empty State ──────────────────────────────────────────────── */
+.ht-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 72px 20px;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.ht-empty svg {
+  color: var(--border-color);
+  opacity: 1;
+}
+
+.ht-empty p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+/* ── Habit Cards (Today view) ─────────────────────────────────── */
+.ht-today-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ht-habit-card {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.ht-habit-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+  border-color: var(--border-color);
+}
+
+.dark .ht-habit-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-hc--done {
+  border-color: #86efac !important;
+  background: linear-gradient(135deg, #f0fdf4, #fff) !important;
+  box-shadow: 0 2px 12px rgba(34,197,94,0.08) !important;
+}
+
+.ht-hc--missed {
+  border-color: #fca5a5 !important;
+  background: linear-gradient(135deg, #fff5f5, #fff) !important;
+  box-shadow: 0 2px 12px rgba(239,68,68,0.08) !important;
+}
+
+.dark .ht-hc--done {
+  background: linear-gradient(135deg, rgba(34,197,94,0.08), transparent) !important;
+  border-color: #166534 !important;
+}
+
+.dark .ht-hc--missed {
+  background: linear-gradient(135deg, rgba(239,68,68,0.08), transparent) !important;
+  border-color: #7f1d1d !important;
+}
+
+.ht-hc-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ht-hc-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+
+.ht-hc-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+
+.ht-hc-meta {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.ht-hc-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ht-check-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-faint);
+}
+
+.dark .ht-check-btn { background: var(--bg-surface); }
+
+.ht-check--done:hover   { border-color: #22c55e !important; color: #22c55e !important; background: #f0fdf4 !important; }
+.ht-check--miss:hover   { border-color: #ef4444 !important; color: #ef4444 !important; background: #fff5f5 !important; }
+.ht-check--done.active  { border-color: #22c55e !important; color: #22c55e !important; background: #f0fdf4 !important; }
+.ht-check--miss.active  { border-color: #ef4444 !important; color: #ef4444 !important; background: #fff5f5 !important; }
+
+.ht-delete-btn {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  opacity: 0;
+}
+
+.ht-habit-card:hover .ht-delete-btn { opacity: 1; }
+
+.ht-delete-btn:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ── Charts ───────────────────────────────────────────────────── */
+.ht-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.ht-chart-card {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.dark .ht-chart-card {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-chart-card--wide {
+  grid-column: 1 / -1;
+}
+
+.ht-chart-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Per-habit progress bars */
+.ht-hb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.ht-hb-name {
+  width: 110px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ht-hb-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-light);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.dark .ht-hb-track {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--border-color);
+}
+
+.ht-hb-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.ht-hb-pct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+  width: 38px;
+  text-align: right;
+}
+
+/* ── Calendar view ────────────────────────────────────────────── */
+.ht-calendar-wrap {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.dark .ht-calendar-wrap {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 18px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.ht-cal-nav button {
+  background: var(--bg-light);
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.ht-cal-nav button:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.ht-cal-dayname {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  padding: 6px 0;
+  letter-spacing: 0.06em;
+}
+
+.ht-cal-cell {
+  aspect-ratio: 1;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  position: relative;
+  transition: transform 0.12s;
+}
+
+.ht-cal-cell:hover { transform: scale(1.12); z-index: 1; }
+
+.ht-cal-today {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.ht-cal-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.dark .ht-cal-num { color: #e2e8f0; }
+
+.ht-cal-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  justify-content: flex-end;
+  font-weight: 500;
+}
+
+/* ── Stats Strip ──────────────────────────────────────────────── */
+.ht-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ht-stat {
+  background: #fff;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s;
+}
+
+.ht-stat:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+.dark .ht-stat {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+.ht-stat-num {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ht-stat-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+
+/* ================================================================
+   DIARY PAGE — Full Visual Overhaul
+   ================================================================ */
+
+/* ── Shell layout ─────────────────────────────────────────────── */
+.diary-shell {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  font-family: 'Inter', 'DM Sans', sans-serif;
+  background: transparent;
+}
+
+/* ── Writing column ───────────────────────────────────────────── */
+.diary-write-col {
+  flex: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+/* Left page margin line */
+.diary-write-col::before {
+  content: '';
+  position: absolute;
+  left: 68px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(251,146,60,0.12);
+  pointer-events: none;
+}
+
+/* ── Date / header row ────────────────────────────────────────── */
+.diary-write-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  flex-wrap: wrap;
+}
+
+.diary-write-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.diary-time {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ── Title input ──────────────────────────────────────────────── */
+.diary-title-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.3;
+  background: transparent;
+  margin-bottom: 20px;
+  resize: none;
+  letter-spacing: -0.02em;
+}
+
+.diary-title-input::placeholder {
+  color: rgba(0,0,0,0.2);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* ── Mood row ─────────────────────────────────────────────────── */
+.diary-mood-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.diary-mood-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.3);
+}
+
+.diary-moods {
+  display: flex;
+  gap: 6px;
+}
+
+.diary-mood-btn {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 12px !important;
+  border: 2px solid transparent !important;
+  background: rgba(0,0,0,0.06) !important;
+  font-size: 1.2rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.diary-mood-btn:hover {
+  background: rgba(0,0,0,0.1) !important;
+  transform: scale(1.12) translateY(-1px) !important;
+}
+
+.diary-mood-btn.active {
+  border-color: var(--primary) !important;
+  background: #eef2ff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.2) !important;
+}
+
+/* ── Rich text toolbar ────────────────────────────────────────── */
+.diary-toolbar {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 6px 8px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  flex-wrap: wrap;
+  width: fit-content;
+}
+
+.diary-toolbar button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.diary-toolbar button:hover {
+  background: rgba(99,102,241,0.1) !important;
+  color: var(--primary) !important;
+}
+
+.diary-toolbar button.active {
+  background: var(--primary) !important;
+  color: #fff !important;
+}
+
+.diary-tb-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(0,0,0,0.1);
+  margin: auto 4px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ── Editor wrap — paper feel ─────────────────────────────────── */
+.diary-editor-wrap {
+  flex: 1;
+  min-height: 280px;
+  background: rgba(255,255,255,0.75);
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 22px;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 2px 12px rgba(0,0,0,0.04);
+  overflow-y: auto;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.diary-editor-wrap:focus-within {
+  border-color: rgba(99,102,241,0.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 0 0 3px rgba(99,102,241,0.06),
+    0 4px 20px rgba(0,0,0,0.06) !important;
+}
+
+.dark .diary-editor-wrap {
+  background: rgba(30,41,59,0.7);
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* Editor inner text */
+.diary-editor-wrap .ProseMirror {
+  outline: none;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: inherit;
+  min-height: 240px;
+}
+
+.diary-editor-wrap .ProseMirror p { margin: 0 0 6px; }
+.diary-editor-wrap .ProseMirror h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.diary-editor-wrap .ProseMirror ul { padding-left: 20px; }
+
+.diary-editor-wrap .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: rgba(0,0,0,0.25);
+  pointer-events: none;
+  float: left;
+  height: 0;
+  font-style: italic;
+}
+
+/* ── Bottom footer bar ────────────────────────────────────────── */
+.diary-write-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.diary-footer-left,
+.diary-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.diary-icon-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  background: rgba(0,0,0,0.06) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  color: rgba(0,0,0,0.5) !important;
+  transition: all 0.15s !important;
+}
+
+.diary-icon-btn:hover {
+  background: rgba(99,102,241,0.12) !important;
+  color: var(--primary) !important;
+  transform: scale(1.05) !important;
+}
+
+.diary-icon-btn.active {
+  background: #eef2ff !important;
+  color: var(--primary) !important;
+}
+
+/* Save / Past Entries buttons */
+.diary-save-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 11px 24px !important;
+  background: var(--gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.2s !important;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.3) !important;
+  white-space: nowrap;
+}
+
+.diary-save-btn:hover:not(:disabled) {
+  opacity: 0.9 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(99,102,241,0.4) !important;
+}
+
+.diary-save-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+.diary-view-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 11px 18px !important;
+  background: rgba(0,0,0,0.07) !important;
+  color: rgba(0,0,0,0.6) !important;
+  border: 1.5px solid rgba(0,0,0,0.12) !important;
+  border-radius: 12px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+  white-space: nowrap;
+}
+
+.diary-view-btn:hover {
+  background: rgba(0,0,0,0.12) !important;
+  color: rgba(0,0,0,0.85) !important;
+  border-color: rgba(0,0,0,0.2) !important;
+}
+
+/* ── Right: Entries panel ─────────────────────────────────────── */
+.diary-entries-col {
+  width: 340px;
+  min-width: 340px;
+  background: rgba(255,255,255,0.6);
+  border-left: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+.dark .diary-entries-col {
+  background: rgba(15,23,42,0.7);
+  border-left-color: rgba(255,255,255,0.06);
+}
+
+.diary-entries-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-main);
+}
+
+.diary-entry-count {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+/* Search bar */
+.diary-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.diary-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  font-family: inherit;
+}
+
+.diary-search-input::placeholder { color: var(--text-faint); }
+
+/* New entry button */
+.diary-new-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 12px 16px !important;
+  padding: 9px 16px !important;
+  background: var(--gradient-btn) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  transition: all 0.15s !important;
+  box-shadow: 0 3px 10px rgba(99,102,241,0.25) !important;
+  width: calc(100% - 32px) !important;
+  justify-content: center !important;
+}
+
+.diary-new-btn:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Entry cards */
+.diary-entry-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px 12px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin: 0 8px 2px;
+  position: relative;
+}
+
+.diary-entry-card:hover {
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transform: translateX(3px);
+}
+
+.dark .diary-entry-card:hover {
+  background: var(--bg-surface);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.diary-entry-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 34px;
+  padding-top: 2px;
+}
+
+.dec-num {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--primary) !important;
+  letter-spacing: -0.02em;
+}
+
+.dec-weekday {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+
+.dei-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.dei-preview {
+  font-size: 0.73rem;
+  color: var(--text-faint);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+/* Month label */
+.diary-month-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  padding: 12px 12px 6px;
+}
+
+/* Entry delete button */
+.diary-entry-delete {
+  opacity: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 7px;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+
+.diary-entry-card:hover .diary-entry-delete { opacity: 1; }
+
+.diary-entry-delete:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Empty / loading state */
+.diary-empty, .diary-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 12px;
+  color: var(--text-faint);
+  font-size: 0.88rem;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.diary-empty span { font-size: 2.5rem; }
+
+/* Read view */
+.diary-read-view {
+  padding: 24px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.diary-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: rgba(0,0,0,0.07);
+  color: rgba(0,0,0,0.6);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 7px 12px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.diary-back-btn:hover {
+  background: rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.85);
+}
+
+.diary-read-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  color: rgba(0,0,0,0.4);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.diary-read-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.85);
+  margin-bottom: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.dark .diary-read-title { color: #f1f5f9; }
+
+.diary-read-body {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: rgba(0,0,0,0.75);
+}
+
+.dark .diary-read-body { color: #d1d5db; }
+.diary-read-body p { margin-bottom: 10px; }
+
+/* Color popover */
+.diary-color-popover {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+  padding: 12px;
+  z-index: 200;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  width: 220px;
+}
+
+.diary-cp-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform .15s;
+  border: 2px solid transparent;
+}
+
+.diary-cp-swatch:hover { transform: scale(1.18); }
+.diary-cp-swatch.active {
+  box-shadow: 0 0 0 2.5px var(--primary) !important;
+  transform: scale(1.1);
+}
+
+/* Export menu */
+.diary-export-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 200;
+  min-width: 140px;
+}
+
+.diary-export-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.12s;
+  font-weight: 500;
+}
+
+.diary-export-menu button:hover { background: var(--bg-light); }
+
+/* ── Diary responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .diary-shell { flex-direction: column; }
+  .diary-write-col { max-width: 100%; padding: 24px 20px; }
+  .diary-write-col::before { display: none; }
+  .diary-entries-col {
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: none;
+  }
+  .diary-entries-col--visible { display: flex; }
+}
+
+@media (max-width: 768px) {
+  .diary-write-col { padding: 20px 16px; }
+  .diary-title-input { font-size: 1.5rem; }
+  .diary-write-footer { gap: 8px; }
+  .diary-save-btn { padding: 10px 18px !important; }
 }
