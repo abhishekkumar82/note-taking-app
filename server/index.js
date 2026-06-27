@@ -52,6 +52,7 @@ const dashboardRouter      = require("./routes/dashboard");
 const habitRouter          = require("./routes/habits");
 const diaryRouter          = require("./routes/diary");
 const paymentRouter        = require("./routes/payment");
+const reviewRouter         = require("./routes/reviews");
 const collabRouter         = require("./routes/collab");
 const semanticSearchRouter = require("./routes/semanticSearch");
 const initCollabSocket     = require("./collabSocket");
@@ -67,6 +68,7 @@ app.use("/api/dashboard", dashboardRouter);
 app.use("/api/habits",    habitRouter);
 app.use("/api/diary",     diaryRouter);
 app.use("/api/payment",   paymentRouter);
+app.use("/api/reviews",   reviewRouter);
 app.use("/api/collab",    collabRouter);                 // ⭐ ADDED — collab start/resolve/revoke
 app.use("/api/search",    semanticSearchRouter);
 

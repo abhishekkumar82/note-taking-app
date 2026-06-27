@@ -22,6 +22,7 @@ import OfflineIndicator from "../components/OfflineIndicator";
 import TemplatePickerModal from "../components/TemplatePickerModal";
 // In Dashboard.jsx, just above <Header …>
 import CommandPalette from "../components/CommandPalette";
+import RateReviewModal from "../components/RateReviewModal";
 // ── Max browser/speech notifications per reminder ─────────────────────────────
 const MAX_NOTIFY = 5;
 
@@ -147,6 +148,7 @@ const [selectedTemplate, setSelectedTemplate] = useState(null);
 const { isOnline, syncStatus, pendingCount, manualSync } = useOfflineSync({ showToastMsg });
   // ── Premium gate state ────────────────────────────────────────────────────
   const [premiumGate, setPremiumGate] = useState({ show: false, featureName: "" });
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const { isPremium, loading: premiumLoading } = usePremium();
 
   const notifyCountRef = useRef({});
@@ -478,7 +480,8 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
         selectedFolder={selectedFolder}
         onFetchTrash={fetchTrashNotes}
         archivedCount={archivedNotes.length}
-        isPremium={isPremium}                        // ← pass to Header for badges
+        isPremium={isPremium}
+        onRateReview={() => setShowReviewModal(true)}
       />
 
       <main className={`main-fullwidth ${activeSection === "diary" ? "diary-bg" : ""}`}>
@@ -583,6 +586,11 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
     onClose={() => setShowTemplatePicker(false)}
   />
 )}
+      {/* ── Rate & Review Modal ───────────────────────────────────────────── */}
+      {showReviewModal && (
+        <RateReviewModal onClose={() => setShowReviewModal(false)} />
+      )}
+
       {/* ── Premium Gate Modal ─────────────────────────────────────────────── */}
       {premiumGate.show && (
         <PremiumGateModal

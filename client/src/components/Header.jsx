@@ -4,7 +4,7 @@ import {
   Search, LogOut, Sun, Moon, Menu, X,
   Lightbulb, Bell, BookOpen, CalendarDays, BarChart2,
   FolderOpen, Lock, Archive, ArchiveRestore,
-  ChevronDown, ChevronRight, Plus, Trash2, Pencil, Crown, Command,
+  ChevronDown, ChevronRight, Plus, Trash2, Pencil, Crown, Command, Star,
 } from 'lucide-react';
 import { RefreshCw } from "lucide-react";
 import api from '../utils/axiosInstance';
@@ -37,7 +37,8 @@ const Header = ({
   selectedFolder,
   onFetchTrash,
   archivedCount = 0,
-  isPremium = false,   // ← received from Dashboard
+  isPremium = false,
+  onRateReview,
 }) => {
   const [darkMode,      setDarkMode]      = useState(false);
   const [sidebarOpen,   setSidebarOpen]   = useState(false);
@@ -122,7 +123,7 @@ const handleReindex = async () => {
           </button>
 
           {/* Logo — icon always, text hidden on mobile via CSS */}
-          <LogoFull size={34} />
+          <LogoFull size={34} dark={darkMode} />
 
           {/* Search + palette — hidden on mobile, visible on tablet+ */}
           <div className="header-search-tools">
@@ -161,6 +162,15 @@ const handleReindex = async () => {
               disabled={reindexing}
             >
               <RefreshCw size={16} style={{ animation: reindexing ? "spin 1s linear infinite" : "none" }} />
+            </button>
+
+            <button
+              onClick={onRateReview}
+              className="theme-btn"
+              title="Rate & Review WriteUp"
+              aria-label="Rate and review"
+            >
+              <Star size={17} />
             </button>
 
             <button

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "./AuthModal";
 import { LogoMark, LogoWordmark, LogoFull } from "../components/Logo";
+import ReviewsSection from "../components/ReviewsSection";
+import FeatureDemoSection from "../components/FeatureDemoSection";
 
 // ── useInView hook ────────────────────────────────────────────────────────────
 const useInView = (threshold = 0.15) => {
@@ -31,39 +33,6 @@ const Reveal = ({ children, delay = 0 }) => {
   );
 };
 
-// ── Feature data ──────────────────────────────────────────────────────────────
-const FEATURES = [
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
-    color: "#6366f1", bg: "#eef2ff", title: "Smart Notes",
-    desc: "Rich text editor with images, videos, code blocks, AI tools, and tag-based organisation.",
-  },
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5V5a2 2 0 012-2h14v16H6.5A2.5 2.5 0 014 19.5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
-    color: "#ec4899", bg: "#fdf2f8", title: "Personal Diary",
-    desc: "PIN-protected private diary with mood tracking, colour themes, and past-entry search.",
-  },
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
-    color: "#f59e0b", bg: "#fffbeb", title: "Smart Reminders",
-    desc: "Set date/time reminders with daily or weekly repeats, just like Google Keep.",
-  },
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-4 4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>),
-    color: "#10b981", bg: "#ecfdf5", title: "Habit Tracker",
-    desc: "Track daily and weekly habits with streaks, charts, and email congratulations.",
-  },
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>),
-    color: "#8b5cf6", bg: "#f5f3ff", title: "Locked Notes",
-    desc: "Protect sensitive notes with a PIN. Hidden from view until unlocked.",
-  },
-  {
-    icon: (<svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>),
-    color: "#06b6d4", bg: "#ecfeff", title: "AI Tools",
-    desc: "Summarise, improve, translate, expand, and analyse mood — all with one click.",
-  },
-];
 
 const WHY = [
   { icon: "⚡", title: "All-in-one", desc: "Notes, diary, habits, and reminders in a single app." },
@@ -128,15 +97,15 @@ const LandingPage = () => {
       overflowX: "hidden",
     },
     nav: {
-      position: "sticky", top: 0, zIndex: 99,
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 999,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       padding: "0 5vw", height: 64,
-      background: scrolled
-        ? d ? "rgba(11,15,26,0.92)" : "rgba(255,255,255,0.92)"
-        : "transparent",
-      backdropFilter: scrolled ? "blur(12px)" : "none",
-      borderBottom: scrolled ? `1px solid ${d ? "#1e293b" : "#e2e8f0"}` : "none",
-      transition: "all 0.3s ease",
+      background: d ? "rgba(11,15,26,0.96)" : "rgba(255,255,255,0.96)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
+      borderBottom: `1px solid ${d ? "#1e293b" : "#e8edf3"}`,
+      boxShadow: scrolled ? "0 1px 20px rgba(0,0,0,0.08)" : "0 1px 0 rgba(0,0,0,0.04)",
+      transition: "box-shadow 0.3s ease",
     },
     logo: {
       fontSize: 22, fontWeight: 800, letterSpacing: "-0.5px",
@@ -217,16 +186,6 @@ const LandingPage = () => {
     dot: (c) => ({ width: 10, height: 10, borderRadius: "50%", background: c }),
   };
 
-  const noteColors = ["#fef9c3","#dcfce7","#dbeafe","#fce7f3","#ede9fe"];
-  const notes = [
-    { title: "Meeting notes", body: "Discuss Q2 roadmap…", tag: "#work",     color: noteColors[2] },
-    { title: "Book list",     body: "Atomic Habits, SICP…", tag: "#reading", color: noteColors[0] },
-    { title: "IPL score",     body: "CSK vs MI thriller!",  tag: "#sports",  color: noteColors[1] },
-    { title: "Grocery",       body: "Milk, eggs, bread…",   tag: "#personal",color: noteColors[3] },
-    { title: "React ideas",   body: "Habit chart with D3…", tag: "#dev",     color: noteColors[4] },
-    { title: "Weekend plan",  body: "Hike + dinner at 8",   tag: "#life",    color: noteColors[0] },
-  ];
-
   return (
     <div style={s.page}>
       <style>{`
@@ -247,22 +206,19 @@ const LandingPage = () => {
 
         /* Tablet (≤ 1024px) */
         @media (max-width: 1024px) {
-          .wu-hero-section { padding: 80px 5vw 60px !important; }
+          .wu-hero-section { padding: 144px 5vw 60px !important; }
           .wu-features-grid { grid-template-columns: repeat(auto-fit, minmax(220px,1fr)) !important; }
-          .wu-preview-mockup { transform: none !important; }
         }
 
         /* Tablet portrait (≤ 768px) */
         @media (max-width: 768px) {
           .wu-nav { padding: 0 4vw !important; height: 58px !important; }
           .wu-nav-links { display: none; }
-          .wu-hero-section { padding: 70px 5vw 50px !important; }
+          .wu-hero-section { padding: 134px 5vw 50px !important; }
           .wu-hero-sub { font-size: 16px !important; }
           .wu-hero-buttons { gap: 10px !important; }
           .wu-hero-btn-fill,
           .wu-hero-btn-outline { padding: 13px 24px !important; font-size: 15px !important; }
-          .wu-stats-row { gap: 0 !important; }
-          .wu-preview-mockup { margin-top: 40px !important; transform: none !important; border-radius: 16px !important; }
           .wu-features-grid { gap: 14px !important; }
           .wu-feat-card { padding: 22px 18px !important; }
           .wu-why-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
@@ -273,14 +229,11 @@ const LandingPage = () => {
           .wu-nav { padding: 0 16px !important; }
           .wu-nav-right { gap: 6px !important; }
           .wu-nav-login { display: none !important; }
-          .wu-hero-section { padding: 60px 16px 40px !important; }
+          .wu-hero-section { padding: 124px 16px 40px !important; }
           .wu-hero-sub { font-size: 15px !important; max-width: 100% !important; }
           .wu-hero-buttons { flex-direction: column !important; align-items: stretch !important; }
           .wu-hero-btn-fill,
           .wu-hero-btn-outline { padding: 14px 20px !important; font-size: 15px !important; text-align: center !important; }
-          .wu-stats-row { flex-direction: row !important; flex-wrap: wrap !important; justify-content: center !important; margin-top: 32px !important; }
-          .wu-stat-item { flex: 1 !important; min-width: 100px !important; padding: 12px 8px !important; border-right: none !important; }
-          .wu-preview-mockup { display: none !important; }
           .wu-features-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
           .wu-feat-card { padding: 18px 16px !important; }
           .wu-why-grid { grid-template-columns: 1fr 1fr !important; }
@@ -295,7 +248,7 @@ const LandingPage = () => {
 
         /* Small phone (≤ 480px) */
         @media (max-width: 480px) {
-          .wu-hero-section { padding: 52px 14px 36px !important; }
+          .wu-hero-section { padding: 116px 14px 36px !important; }
           .wu-hero-sub { font-size: 14px !important; }
           .wu-why-grid { grid-template-columns: 1fr !important; }
           .wu-why-card { padding: 18px 16px !important; }
@@ -306,7 +259,7 @@ const LandingPage = () => {
 
         /* Very small (≤ 360px) */
         @media (max-width: 360px) {
-          .wu-hero-section { padding: 44px 12px 28px !important; }
+          .wu-hero-section { padding: 108px 12px 28px !important; }
           .wu-hero-btn-fill,
           .wu-hero-btn-outline { padding: 12px 16px !important; font-size: 14px !important; }
         }
@@ -325,7 +278,7 @@ const LandingPage = () => {
       <nav className="wu-nav" style={s.nav}>
         <LogoFull size={34} dark={d} />
         <div className="wu-nav-links" style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {[["features","Features"],["preview","Preview"],["why","Why us"]].map(([id, label]) => (
+          {[["preview","Features"],["why","Why us"],["reviews","Reviews"]].map(([id, label]) => (
             <button key={id} className="wu-nav-link" style={s.navLink} onClick={() => scrollTo(id)}>
               {label}
             </button>
@@ -340,7 +293,7 @@ const LandingPage = () => {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="wu-hero-section" style={{ padding: "100px 5vw 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section className="wu-hero-section" style={{ padding: "164px 5vw 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Background glow orbs */}
         <div style={{ position:"absolute",width:600,height:600,borderRadius:"50%",background:"radial-gradient(circle,#6366f120 0%,transparent 70%)",top:-150,left:"5%",pointerEvents:"none",filter:"blur(1px)" }}/>
         <div style={{ position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#8b5cf620 0%,transparent 70%)",top:-50,right:"0%",pointerEvents:"none",filter:"blur(1px)" }}/>
@@ -368,80 +321,16 @@ const LandingPage = () => {
             <button className="wu-big-fill wu-hero-btn-fill" style={s.bigBtnFill} onClick={handleGetStarted}>
               Start for free →
             </button>
-            <button className="wu-big-outline wu-hero-btn-outline" style={s.bigBtnOutline} onClick={() => scrollTo("features")}>
+            <button className="wu-big-outline wu-hero-btn-outline" style={s.bigBtnOutline} onClick={() => scrollTo("preview")}>
               See features
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="wu-stats-row" style={{ display:"flex",justifyContent:"center",gap:0,marginTop:48,flexWrap:"wrap", maxWidth:480, margin:"48px auto 0" }}>
-            {[["10k+","Notes created"],["500+","Daily users"],["99%","Uptime"]].map(([n,l], i) => (
-              <div className="wu-stat-item" key={n} style={{ textAlign:"center", flex:1, padding:"16px 20px", borderRight: i < 2 ? `1px solid ${d?"#1e293b":"#e5e7eb"}` : "none" }}>
-                <div style={{ fontSize:30,fontWeight:800,color:d?"#f1f5f9":"#0f172a",letterSpacing:"-1px" }}>{n}</div>
-                <div style={{ fontSize:12.5,color:d?"#94a3b8":"#64748b",marginTop:4,fontWeight:500 }}>{l}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* App mockup */}
-          <div id="preview" className="wu-preview-mockup" style={{
-            margin:"60px auto 0", maxWidth:900, borderRadius:24,
-            border:`1px solid ${d?"#1e293b":"#e2e8f0"}`,
-            background:d?"#0f172a":"#f5f5f7", overflow:"hidden",
-            boxShadow: d
-              ? "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)"
-              : "0 32px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06)",
-            transform: "perspective(1000px) rotateX(2deg)",
-            transformOrigin: "center top",
-          }}>
-            <div style={{ display:"flex",alignItems:"center",gap:6,padding:"10px 16px",background:d?"#1e293b":"#e2e8f0" }}>
-              {["#ef4444","#f59e0b","#22c55e"].map(c => <div key={c} style={s.dot(c)}/>)}
-              <span style={{ marginLeft:10,fontSize:12,color:d?"#64748b":"#94a3b8" }}>localhost:5173/dashboard</span>
-            </div>
-            <div style={{ display:"flex",alignItems:"center",gap:12,padding:"12px 20px",borderBottom:`1px solid ${d?"#1e293b":"#e2e8f0"}`,background:d?"#0f172a":"#fff" }}>
-              <LogoFull size={22} dark={d} />
-              <div style={{ flex:1,maxWidth:280,height:28,borderRadius:7,background:d?"#1e293b":"#f1f5f9",display:"flex",alignItems:"center",padding:"0 10px",fontSize:12,color:d?"#64748b":"#94a3b8" }}>
-                Search your notes…
-              </div>
-              <div style={{ marginLeft:"auto",display:"flex",gap:6 }}>
-                {["Notes","Diary","Habits"].map(t => (
-                  <span key={t} style={{ fontSize:12,padding:"4px 10px",borderRadius:6,background:t==="Notes"?"#6366f1":d?"#1e293b":"#f1f5f9",color:t==="Notes"?"#fff":d?"#94a3b8":"#64748b",fontWeight:500 }}>{t}</span>
-                ))}
-              </div>
-            </div>
-            <div style={{ padding:20,display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(148px,1fr))",gap:12,background:d?"#0b0f1a":"#f5f5f7" }}>
-              {notes.map((n,i) => (
-                <div key={i} style={{ borderRadius:14,background:d?"#1e293b":n.color,padding:"14px 13px 10px",border:`1px solid ${d?"#334155":"rgba(0,0,0,0.05)"}`, boxShadow: d ? "none" : "0 1px 4px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)", transition:"transform .2s" }}>
-                  <div style={{ fontSize:13,fontWeight:700,color:d?"#f1f5f9":"#111827",marginBottom:6,letterSpacing:"-0.01em" }}>{n.title}</div>
-                  <div style={{ fontSize:11.5,color:d?"#94a3b8":"#4b5563",lineHeight:1.55,marginBottom:10 }}>{n.body}</div>
-                  <span style={{ fontSize:10,padding:"2px 8px",borderRadius:12,background:"rgba(99,102,241,.13)",color:"#6366f1",fontWeight:700,letterSpacing:"0.01em" }}>{n.tag}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section id="features" className="wu-section" style={s.section(d?"#0f172a":"#f8fafc")}>
-        <Reveal>
-          <h2 className="wu-section-title" style={s.sectionTitle}>Everything you need, nothing you don't</h2>
-          <p className="wu-section-sub" style={s.sectionSub}>Six powerful tools in one app — built for people who want to think clearly and live intentionally.</p>
-        </Reveal>
-        <div className="wu-features-grid" style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20,maxWidth:1060,margin:"0 auto" }}>
-          {FEATURES.map((f, i) => (
-            <Reveal key={f.title} delay={i * 0.07}>
-              <div className="wu-feat-card" style={s.featureCard}>
-                <div className="wu-feat-card-icon" style={{ width:46,height:46,borderRadius:12,background:d?`${f.color}22`:f.bg,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16 }}>
-                  <span style={{ color:f.color }}>{f.icon}</span>
-                </div>
-                <div style={{ fontSize:16,fontWeight:700,color:d?"#f1f5f9":"#0f172a",marginBottom:8 }}>{f.title}</div>
-                <div style={{ fontSize:14,color:d?"#94a3b8":"#64748b",lineHeight:1.6 }}>{f.desc}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      {/* ── FEATURE DEMO VIDEOS ── */}
+      <FeatureDemoSection dark={d} onGetStarted={handleGetStarted} />
 
       {/* ── WHY ── */}
       <section id="why" className="wu-section" style={s.section(d?"#0b0f1a":"#fff")}>
@@ -480,6 +369,9 @@ const LandingPage = () => {
           </button>
         </Reveal>
       </section>
+
+      {/* ── REVIEWS ── */}
+      <div id="reviews"><ReviewsSection /></div>
 
       {/* ── FOOTER ── */}
       <footer className="wu-footer" style={{ padding:"40px 5vw",borderTop:`1px solid ${d?"#1e293b":"#e2e8f0"}`,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:16 }}>
