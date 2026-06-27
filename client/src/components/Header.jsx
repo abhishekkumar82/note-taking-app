@@ -9,6 +9,7 @@ import {
 import { RefreshCw } from "lucide-react";
 import api from '../utils/axiosInstance';
 import SmartSearchBar from "./SmartSearchBar";
+import { LogoFull } from './Logo';
 import '../index.css';
 
 // Sections visible to everyone (no premium gate in sidebar)
@@ -114,57 +115,60 @@ const handleReindex = async () => {
       {/* ── Top bar ─────────────────────────────────────────────────────────── */}
       <header className="main-header">
         <div className="header-container">
+
+          {/* Hamburger — always visible */}
           <button className="hamburger-btn" onClick={() => setSidebarOpen(v => !v)} aria-label="Menu">
-            {sidebarOpen ? <X size={22} /> : <Menu size={22} />}
+            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
-          <div className="logo-section">
-            <img src="/logo (1).png" alt="WriteUp" className="logo-img" />
-            <span className="logo-text">Write Up</span>
-          </div>
+
+          {/* Logo — icon always, text hidden on mobile via CSS */}
+          <LogoFull size={34} />
+
+          {/* Search + palette — hidden on mobile, visible on tablet+ */}
           <div className="header-search-tools">
             <SmartSearchBar onSearch={onSearch} onSemanticResults={onSemanticResults} />
             <button
               type="button"
               className="cp-trigger"
               onClick={onOpenCommandPalette}
-              title="Open command palette"
+              title="Open command palette (Ctrl K)"
               aria-label="Open command palette"
             >
-              <Command size={17} />
-              <span>Palette</span>
+              <Command size={16} />
+              <span className="cp-trigger-label">Palette</span>
               <kbd>Ctrl K</kbd>
             </button>
           </div>
+
+          {/* Right nav — shrinks on mobile */}
           <div className="user-nav">
             <span className="user-greeting">Hi, {userName}</span>
-            {/* Premium badge in header */}
+
             {isPremium && (
-              <span title="Premium" style={{
-                display: "inline-flex", alignItems: "center", gap: 3,
-                background: "linear-gradient(135deg,#f59e0b,#f97316)",
-                color: "#fff", fontSize: 11, fontWeight: 700,
-                padding: "2px 8px", borderRadius: 20, letterSpacing: 0.3,
-              }}>
+              <span className="header-pro-badge" title="Premium">
                 <Crown size={11} /> PRO
               </span>
             )}
+
             <button onClick={toggleDarkMode} className="theme-btn" title="Toggle Dark Mode">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
+
             <button
-  onClick={handleReindex}
-  className="theme-btn"
-  title="Enable Smart Search for older notes"
-  disabled={reindexing}
->
-  <RefreshCw size={16} style={{ animation: reindexing ? "spin 1s linear infinite" : "none" }} />
-</button>
+              onClick={handleReindex}
+              className="theme-btn header-reindex-btn"
+              title="Re-index notes for smart search"
+              disabled={reindexing}
+            >
+              <RefreshCw size={16} style={{ animation: reindexing ? "spin 1s linear infinite" : "none" }} />
+            </button>
+
             <button
               onClick={() => window.location.href = 'http://localhost:9090/auth/logout'}
               className="logout-btn"
               title="Logout"
             >
-              <LogOut size={20} />
+              <LogOut size={18} />
             </button>
           </div>
         </div>
@@ -178,6 +182,24 @@ const handleReindex = async () => {
           <span className="hs-brand">Menu</span>
           <button className="hs-close" onClick={() => setSidebarOpen(false)}><X size={18} /></button>
         </div>
+
+        {/* Mobile-only search bar inside the sidebar */}
+        <div className="hs-mobile-search">
+          <Search size={15} className="hs-mobile-search-icon" />
+          <SmartSearchBar
+            onSearch={(results, term) => { onSearch(results, term); setSidebarOpen(false); }}
+            onSemanticResults={(results, term) => { onSemanticResults(results, term); setSidebarOpen(false); }}
+          />
+        </div>
+
+        {/* Mobile-only command palette button */}
+        <button
+          className="hs-mobile-palette"
+          onClick={() => { onOpenCommandPalette(); setSidebarOpen(false); }}
+        >
+          <Command size={16} /> Command Palette
+          <kbd className="hs-kbd">Ctrl K</kbd>
+        </button>
 
         <nav className="hs-nav">
           {/* Main sections */}

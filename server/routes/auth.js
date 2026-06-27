@@ -86,10 +86,24 @@ router.post("/send-otp", async (req, res) => {
 
     otpStore.set(email.toLowerCase(), { otp, expiresAt, attempts: 0 });
 
-    await sendLoginOtpEmail(email, otp);
-    console.log(`\n🔑  Login OTP for ${email}  →  ${otp}  (valid 10 min)\n`);
+    let emailSent = false;
+    try {
+      await sendLoginOtpEmail(email, otp);
+      emailSent = true;
+    } catch (emailErr) {
+      // Email sending failed (e.g. Gmail not configured) — log OTP to console for dev
+      console.warn(`[send-otp] ⚠️  Email delivery failed: ${emailErr.message}`);
+    }
 
-    res.json({ message: "OTP sent to your email. Check your inbox.", expiresIn: 600 });
+    // Always log to terminal for development convenience
+    console.log(`\n🔑  Login OTP for ${email}  →  ${otp}  (valid 10 min)${emailSent ? " ✉️ Email sent" : " ⚠️ Check terminal"}\n`);
+
+    res.json({
+      message: emailSent
+        ? "OTP sent to your email. Check your inbox (and spam folder)."
+        : "OTP generated — check the server console (email not configured).",
+      expiresIn: 600,
+    });
   } catch (err) {
     console.error("[send-otp]", err.message);
     res.status(500).json({ message: "Failed to send OTP. Try again." });

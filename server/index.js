@@ -1,21 +1,13 @@
 require('dotenv').config();
-const http = require('http');                          // ⭐ ADDED — needed to attach Socket.io
+const http = require('http');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 const connectDB = require('./config/database');
-const habitsRouter = require('./routes/habits');
-require('./config/passport');   // ⭐ ADD THIS LINE
-const { isLoggedIn } = require('./middleware/checkAuth');
-const diaryRoutes = require("./routes/diary");
+require('./config/passport');
 const app = express();
-const PORT = process.env.PORT;
-const authRoutes = require("./routes/auth");
-const paymentRouter = require("./routes/payment");
-const collabRouter = require("./routes/collab");        // ⭐ ADDED — collab REST routes
-const initCollabSocket = require("./collabSocket");      // ⭐ ADDED — collab realtime engine
-const semanticSearchRouter = require("./routes/semanticSearch");
+const PORT = process.env.PORT || 9090;
 
 // ── BullMQ habit email queue ──────────────────────────────────────────────────
 // ⚠️ DISABLED — these files don't exist yet in this project. Re-enable once
@@ -44,7 +36,7 @@ app.use(express.json());
 
 // Session setup
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET || 'writeup-session-secret-change-in-prod',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 60 * 60 * 24 * 7 * 1000 }
@@ -55,10 +47,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-const authRouter      = require("./routes/auth");
-const dashboardRouter = require("./routes/dashboard");   // your existing routes
-const habitRouter     = require("./routes/habits");        // your existing routes
-const diaryRouter     = require("./routes/diary");
+const authRouter           = require("./routes/auth");
+const dashboardRouter      = require("./routes/dashboard");
+const habitRouter          = require("./routes/habits");
+const diaryRouter          = require("./routes/diary");
+const paymentRouter        = require("./routes/payment");
+const collabRouter         = require("./routes/collab");
+const semanticSearchRouter = require("./routes/semanticSearch");
+const initCollabSocket     = require("./collabSocket");
 
 // Google OAuth routes  →  /auth/google,  /auth/google/callback,  /auth/logout
 app.use("/auth", authRouter);

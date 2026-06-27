@@ -34,18 +34,31 @@ const PremiumGateModal = ({ featureName, onClose }) => (
   <div
     style={{
       position: "fixed", inset: 0, zIndex: 9999,
-      background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)",
+      background: "rgba(15,23,42,0.6)",
+      backdropFilter: "blur(8px)",
+      WebkitBackdropFilter: "blur(8px)",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: 16,
+      animation: "pgm-in 0.2s ease",
     }}
     onClick={onClose}
   >
+    <style>{`
+      @keyframes pgm-in { from { opacity:0; } to { opacity:1; } }
+      @keyframes pgm-slide { from { opacity:0; transform:scale(0.95) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    `}</style>
     <div
       style={{
-        background: "#fff", borderRadius: 24, padding: "0 0 24px",
-        maxWidth: 680, width: "100%", maxHeight: "90vh",
-        overflowY: "auto", position: "relative",
-        boxShadow: "0 24px 80px rgba(0,0,0,0.2)",
+        background: "#fff",
+        borderRadius: 28,
+        padding: 0,
+        maxWidth: 620,
+        width: "100%",
+        maxHeight: "92vh",
+        overflowY: "auto",
+        position: "relative",
+        boxShadow: "0 32px 100px rgba(0,0,0,0.28), 0 0 0 1px rgba(99,102,241,0.1)",
+        animation: "pgm-slide 0.25s cubic-bezier(0.34,1.56,0.64,1)",
       }}
       onClick={e => e.stopPropagation()}
     >
@@ -53,27 +66,39 @@ const PremiumGateModal = ({ featureName, onClose }) => (
       <button
         onClick={onClose}
         style={{
-          position: "absolute", top: 16, right: 16, zIndex: 10,
-          background: "#f1f5f9", border: "none", borderRadius: "50%",
-          width: 32, height: 32, cursor: "pointer", display: "flex",
+          position: "absolute", top: 14, right: 14, zIndex: 20,
+          background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)",
+          border: "1px solid rgba(0,0,0,0.1)", borderRadius: "50%",
+          width: 34, height: 34, cursor: "pointer", display: "flex",
           alignItems: "center", justifyContent: "center",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+          transition: "background 0.15s",
         }}
+        onMouseEnter={e => e.currentTarget.style.background = "#fff"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.85)"}
       >
-        <X size={16} />
+        <X size={16} color="#374151" />
       </button>
 
-      {/* Small hint above the PremiumPage */}
+      {/* Feature name pill — shows inside the hero */}
       {featureName && (
         <div style={{
-          background: "linear-gradient(135deg,#6366f1,#8b5cf6)",
-          color: "#fff", textAlign: "center", padding: "14px 20px",
-          borderRadius: "24px 24px 0 0", fontSize: 14, fontWeight: 600,
+          position: "absolute", top: 16, left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 20,
+          background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)",
+          border: "1.5px solid rgba(99,102,241,0.3)",
+          color: "#6366f1", textAlign: "center",
+          padding: "5px 16px", borderRadius: 20,
+          fontSize: 12, fontWeight: 700,
+          whiteSpace: "nowrap",
+          boxShadow: "0 2px 12px rgba(99,102,241,0.15)",
         }}>
-          🔒 {featureName} is a Premium feature — unlock it below!
+          🔒 {featureName} — Premium only
         </div>
       )}
 
-      {/* Full PremiumPage embedded */}
+      {/* Full PremiumPage embedded — hero section has its own gradient */}
       <PremiumPage onClose={onClose} />
     </div>
   </div>

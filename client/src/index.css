@@ -305,18 +305,8 @@ body {
   color: var(--text-muted);
 }
 
-/* 6. RESPONSIVENESS */
+/* 6. RESPONSIVENESS — original block (header-container column removed; fixed in HEADER CRITICAL FIX) */
 @media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    padding: 1rem;
-  }
-  
-  .search-form {
-    max-width: 100%;
-    order: 3;
-  }
-  
   .welcome-text {
     font-size: 1.75rem;
   }
@@ -9212,4 +9202,1239 @@ body {
   .diary-title-input { font-size: 1.5rem; }
   .diary-write-footer { gap: 8px; }
   .diary-save-btn { padding: 10px 18px !important; }
+}
+
+
+/* ================================================================
+   FINAL VISUAL POLISH — Diary, Premium, Sidebar, PIN Gate
+   ================================================================ */
+
+/* ── DIARY: Editor blends with mood background ────────────────────
+   When the user picks a mood (angry=pinkish, sad=blue, etc.) the
+   diary-write-col background changes. The editor and toolbar must
+   be transparent enough to feel like they belong on that surface,
+   not like a separate white card pasted on top.             ──── */
+
+.diary-editor-wrap {
+  background: rgba(255,255,255,0.38) !important;
+  border: 1.5px solid rgba(255,255,255,0.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 2px 12px rgba(0,0,0,0.04) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.diary-editor-wrap:focus-within {
+  background: rgba(255,255,255,0.52) !important;
+  border-color: rgba(255,255,255,0.7) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 0 0 3px rgba(255,255,255,0.25),
+    0 4px 20px rgba(0,0,0,0.06) !important;
+}
+
+.dark .diary-editor-wrap {
+  background: rgba(15,23,42,0.45) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Toolbar blends too */
+.diary-toolbar {
+  background: rgba(255,255,255,0.42) !important;
+  border: 1px solid rgba(255,255,255,0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Icon buttons on colored background — keep semi-transparent */
+.diary-write-col .diary-icon-btn {
+  background: rgba(255,255,255,0.35) !important;
+  color: rgba(0,0,0,0.55) !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  backdrop-filter: blur(4px);
+}
+
+.diary-write-col .diary-icon-btn:hover {
+  background: rgba(255,255,255,0.6) !important;
+  color: rgba(0,0,0,0.8) !important;
+}
+
+.diary-write-col .diary-icon-btn.active {
+  background: rgba(99,102,241,0.18) !important;
+  border-color: rgba(99,102,241,0.35) !important;
+  color: #4f46e5 !important;
+}
+
+/* View-btn on colored bg */
+.diary-write-col .diary-view-btn {
+  background: rgba(255,255,255,0.35) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+  color: rgba(0,0,0,0.65) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.diary-write-col .diary-view-btn:hover {
+  background: rgba(255,255,255,0.55) !important;
+  color: rgba(0,0,0,0.85) !important;
+}
+
+/* Divider on colored bg */
+.diary-write-col .diary-write-header {
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Mood buttons on colored bg */
+.diary-write-col .diary-mood-btn {
+  background: rgba(255,255,255,0.32) !important;
+  border: 2px solid transparent !important;
+}
+
+.diary-write-col .diary-mood-btn:hover {
+  background: rgba(255,255,255,0.55) !important;
+  transform: scale(1.14) translateY(-2px) !important;
+}
+
+.diary-write-col .diary-mood-btn.active {
+  background: rgba(255,255,255,0.65) !important;
+  border-color: rgba(0,0,0,0.2) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Title input on colored bg */
+.diary-title-input::placeholder {
+  color: rgba(0,0,0,0.22) !important;
+  font-style: italic;
+}
+
+/* Reminder chip style on colored bg */
+.diary-write-col .diary-write-date {
+  color: rgba(0,0,0,0.45) !important;
+}
+
+/* ── DIARY: Right entries panel ───────────────────────────────── */
+.diary-entries-col {
+  background: rgba(255,255,255,0.72) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-left: 1px solid rgba(0,0,0,0.07) !important;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.04);
+}
+
+.dark .diary-entries-col {
+  background: rgba(15,23,42,0.75) !important;
+  border-left-color: rgba(255,255,255,0.05) !important;
+}
+
+.diary-entries-header {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+}
+
+.dark .diary-entries-header {
+  background: rgba(30,41,59,0.6);
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+}
+
+/* ── DIARY: Write column centering ────────────────────────────── */
+.diary-shell {
+  min-height: calc(100vh - 60px);
+}
+
+.diary-write-col {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 52px 52px;
+}
+
+/* ── DIARY: PinGate — polished card ───────────────────────────── */
+/* The inline styles handle most of the layout; we enhance the   */
+/* container context so it looks integrated with the diary bg.   */
+.diary-pin-overlay,
+.main-fullwidth:has(.diary-pin-overlay) {
+  background: linear-gradient(135deg,#fffbf5,#fdf6ef) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The card (inline S.card) already has good shadow.
+   We just need the host area to have the correct bg.           */
+.diary-pin-card {
+  background: #fff !important;
+  border: 1px solid #f0f0f0 !important;
+  border-radius: 24px !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.04) !important;
+}
+
+/* Focus ring on PIN input */
+.diary-pin-input:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.12) !important;
+  background: #fafafe !important;
+}
+
+/* Unlock button */
+.diary-pin-btn {
+  background: linear-gradient(135deg,#4f46e5,#7c3aed) !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.3) !important;
+  transition: all 0.2s !important;
+}
+
+.diary-pin-btn:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 20px rgba(99,102,241,0.4) !important;
+}
+
+/* Forgot PIN link */
+.diary-pin-forgot {
+  color: #ef4444 !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+}
+
+/* ── PREMIUM PAGE — improved modal embedding ──────────────────── */
+/* The PremiumGateModal in Dashboard.jsx wraps PremiumPage.      */
+/* We improve the outer container it shows in.                   */
+
+/* The gem header in PremiumGateModal */
+div[style*="linear-gradient(135deg,#6366f1,#8b5cf6)"] {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Premium page gem icon — bigger, centered */
+.pp-gem {
+  font-size: 64px;
+  display: block;
+  text-align: center;
+  margin: 0 auto 16px;
+  line-height: 1;
+}
+
+/* Feature table row hover */
+/* (table rows use inline background; we can't easily override without !important) */
+
+/* Trust badge pills */
+/* Already styled inline in s.trustItem — looks good */
+
+/* Plan toggle — improve active state */
+/* Already good in inline s.planBtnActive */
+
+/* ── SIDEBAR — premium badge icons ───────────────────────────── */
+/* The 💎 emoji renders as colored in some browsers.
+   We replace it with a consistent styled text badge.           */
+.hs-item .hs-premium-gem,
+.hs-item [style*="f59e0b"] {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  color: #f59e0b !important;
+}
+
+/* Sidebar items — better hover and focus */
+.hs-item {
+  border-radius: 12px !important;
+}
+
+.hs-item:hover {
+  background: #f5f5f7 !important;
+  color: var(--text-main) !important;
+}
+
+.hs-item--active {
+  background: #eef2ff !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+}
+
+/* Sidebar section label */
+.hs-item--section {
+  font-size: 0.65rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--text-faint) !important;
+  background: transparent !important;
+  cursor: default !important;
+  padding: 12px 14px 6px !important;
+}
+
+.hs-item--section:hover {
+  background: transparent !important;
+  color: var(--text-faint) !important;
+}
+
+/* Sidebar divider */
+.hs-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 6px 10px;
+  opacity: 0.7;
+}
+
+/* New folder row */
+.hs-new-folder {
+  margin-top: 8px;
+  padding: 6px 8px 4px;
+}
+
+.hs-new-folder input {
+  border: 1.5px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  background: var(--bg-light) !important;
+  font-size: 0.82rem !important;
+  padding: 8px 12px !important;
+  transition: border-color 0.15s !important;
+}
+
+.hs-new-folder input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1) !important;
+}
+
+.hs-new-folder button {
+  background: var(--gradient-btn) !important;
+  border-radius: 10px !important;
+  width: 32px !important;
+  height: 32px !important;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.25) !important;
+  transition: all 0.15s !important;
+}
+
+.hs-new-folder button:hover {
+  opacity: 0.88 !important;
+  transform: scale(1.05) !important;
+}
+
+/* Sidebar brand header */
+.hs-header {
+  padding: 20px 18px 14px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.hs-brand {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+.hs-close {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
+}
+
+.hs-close:hover {
+  background: var(--bg-light) !important;
+  color: var(--text-main) !important;
+}
+
+/* Folder items in sidebar */
+.hs-folder-item {
+  border-radius: 9px !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  padding: 8px 10px !important;
+  transition: all 0.12s !important;
+}
+
+.hs-folder-item:hover {
+  background: #f5f5f7 !important;
+  color: var(--text-main) !important;
+}
+
+.hs-folder-item.active {
+  background: #eef2ff !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Dark mode sidebar */
+.dark .hs-item:hover { background: #1e293b !important; }
+.dark .hs-item--active { background: rgba(79,70,229,0.15) !important; color: #a5b4fc !important; }
+.dark .hs-folder-item:hover { background: #1e293b !important; }
+.dark .hs-folder-item.active { background: rgba(79,70,229,0.15) !important; color: #a5b4fc !important; }
+.dark .hs-item--section { color: var(--text-faint) !important; }
+.dark .hs-new-folder input { background: var(--bg-surface) !important; color: var(--text-main) !important; }
+.dark .hamburger-sidebar { background: #0f172a !important; border-color: #1e293b !important; }
+
+/* ── PREMIUM MODAL close button ───────────────────────────────── */
+/* The X button in PremiumGateModal */
+button[style*="border-radius: 50%"][style*="width: 32px"] {
+  transition: background 0.15s !important;
+}
+
+button[style*="border-radius: 50%"][style*="width: 32px"]:hover {
+  background: #e2e8f0 !important;
+}
+
+/* ── NOTE EMPTY STATE — more interesting ──────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: var(--text-faint);
+  gap: 12px;
+}
+
+.empty-state::before {
+  content: '✍️';
+  font-size: 3rem;
+  display: block;
+  opacity: 0.5;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+/* ── MAIN CONTENT — subtle inner shadow at top ────────────────── */
+.main-fullwidth {
+  background: #f5f5f7;
+}
+
+/* Add subtle page-like inner shadow so pages feel contained */
+.main-fullwidth::before {
+  content: none;
+}
+
+/* ── GLOBAL: Smooth all color/background transitions ──────────── */
+.diary-write-col,
+.diary-editor-wrap,
+.diary-toolbar {
+  transition:
+    background 0.4s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease !important;
+}
+
+
+/* ================================================================
+   RESPONSIVE MASTER SYSTEM
+   All devices: phones 320px → tablets 768px → laptops 1024px+
+   ================================================================
+   Breakpoints:
+     xs   : max-width  480px  — small phones (iPhone SE, Galaxy A)
+     sm   : max-width  640px  — standard phones (iPhone 14, S24)
+     md   : max-width  768px  — large phones / small tablets
+     lg   : max-width 1024px  — tablets (iPad Air, iPad Pro)
+   ================================================================ */
+
+/* ── GLOBAL BASE ──────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; }
+
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Prevent horizontal scroll on all screens */
+body, #root {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ================================================================
+   HEADER — All Breakpoints
+   ================================================================ */
+
+/* Tablet (≤ 1024px) — compact header */
+@media (max-width: 1024px) {
+  .main-header { padding: 0 1.25rem; height: 58px; }
+  .header-container { gap: 0.75rem; }
+  .header-search-tools { max-width: 380px; }
+}
+
+/* Medium (≤ 768px) — mobile header */
+@media (max-width: 768px) {
+  .main-header { padding: 0 1rem; height: 54px; }
+  .header-container { gap: 0.5rem; }
+
+  /* Shrink search to icon-only trigger on smallest sizes */
+  .header-search-tools { max-width: 200px; flex: 1; }
+
+  /* Hide command palette text label */
+  .cp-trigger span:not(kbd) { display: none; }
+  .cp-trigger { padding: 7px 9px; gap: 4px; }
+
+  /* User nav compact */
+  .user-nav { gap: 4px; }
+  .user-greeting { display: none; }
+
+  /* Logo */
+  .logo-text { font-size: 1.1rem; }
+}
+
+/* Small phone (≤ 480px) — minimal header */
+@media (max-width: 480px) {
+  .main-header { padding: 0 0.75rem; height: 52px; }
+
+  /* Hide command palette on tiny screens */
+  .cp-trigger { display: none; }
+
+  /* Search takes remaining space */
+  .header-search-tools { max-width: none; flex: 1; }
+
+  /* Even more compact user nav */
+  .logout-btn, .theme-btn { padding: 5px; }
+  .theme-btn[title="Enable Smart Search for older notes"] { display: none; }
+}
+
+
+/* ================================================================
+   SIDEBAR / HAMBURGER
+   ================================================================ */
+@media (max-width: 768px) {
+  .hamburger-sidebar { width: min(300px, 85vw); }
+}
+
+@media (max-width: 480px) {
+  .hamburger-sidebar { width: 100vw; max-width: 100vw; border-right: none; }
+  .hs-header { padding: 16px 16px 12px; }
+  .hs-nav { padding: 10px 8px; }
+  .hs-item { padding: 12px 14px; font-size: 0.925rem; }
+}
+
+
+/* ================================================================
+   MAIN CONTENT / DASHBOARD
+   ================================================================ */
+@media (max-width: 1024px) {
+  .main-fullwidth { padding: 24px 28px; }
+}
+
+@media (max-width: 768px) {
+  .main-fullwidth { padding: 16px 14px; }
+}
+
+@media (max-width: 480px) {
+  .main-fullwidth { padding: 12px 10px; }
+}
+
+
+/* ================================================================
+   ADD NOTE TRIGGER
+   ================================================================ */
+@media (max-width: 768px) {
+  .add-note-trigger {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-note-trigger {
+    padding: 13px 14px;
+    font-size: 0.875rem;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+
+/* ================================================================
+   SECTION HEADER & TAG FILTERS
+   ================================================================ */
+@media (max-width: 768px) {
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .tag-filter-bar {
+    margin-left: 0;
+    gap: 5px;
+  }
+  .tag-pill { padding: 4px 11px; font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .tag-filter-bar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .tag-pill { flex-shrink: 0; font-size: 0.72rem; padding: 4px 10px; }
+}
+
+
+/* ================================================================
+   NOTES GRID
+   ================================================================ */
+@media (max-width: 1024px) {
+  .notes-grid-new {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .notes-grid-new {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+}
+
+/* 580px+: 2 columns comfortable */
+@media (max-width: 640px) {
+  .notes-grid-new {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+/* Below 500px: single column — cards are too narrow at 2 cols */
+@media (max-width: 500px) {
+  .notes-grid-new {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .notes-grid-new {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+
+/* ================================================================
+   NOTE CARDS
+   ================================================================ */
+@media (max-width: 640px) {
+  .nc-card { min-height: 120px; border-radius: 14px; }
+  .nc-title { font-size: 0.82rem; }
+  .nc-content { font-size: 0.75rem; -webkit-line-clamp: 3; }
+  .nc-actions { padding: 5px 7px 2px; min-height: 30px; }
+  .nc-btn { width: 26px; height: 26px; border-radius: 6px; }
+  .nc-body { padding: 2px 10px 8px; gap: 4px; }
+  .nc-footer { padding: 6px 10px 8px; }
+  .nc-date { font-size: 0.67rem; }
+  .nc-tag { font-size: 0.67rem; padding: 2px 7px; }
+}
+
+@media (max-width: 360px) {
+  .nc-card { min-height: 100px; }
+  .nc-title { font-size: 0.78rem; }
+  .nc-content { -webkit-line-clamp: 2; }
+}
+
+
+/* ================================================================
+   ADD NOTE FORM
+   ================================================================ */
+@media (max-width: 768px) {
+  .an-wrap { max-width: 100%; margin-bottom: 20px; }
+  .an-card { border-radius: 16px; }
+  .an-title-input { font-size: 0.95rem; }
+  .an-editor { padding: 8px 14px; font-size: 0.875rem; }
+  .an-title-row { padding: 12px 14px 4px; }
+  .an-tags-input { padding: 4px 14px 6px; font-size: 0.78rem; }
+  .an-toolbar { padding: 5px 12px; }
+  .an-bottom-bar { padding: 8px 12px 10px; }
+}
+
+@media (max-width: 480px) {
+  .an-card { border-radius: 14px; }
+  .an-title-input { font-size: 0.9rem; }
+  .an-toolbar { flex-wrap: wrap; gap: 1px; }
+  .an-tb-btn { padding: 5px 7px; }
+  .an-bottom-bar { flex-wrap: wrap; gap: 8px; }
+  .an-save-btn { font-size: 0.8rem !important; padding: 8px 14px !important; }
+}
+
+
+/* ================================================================
+   EDIT NOTE MODAL
+   ================================================================ */
+@media (max-width: 768px) {
+  .modal-overlay { padding: 10px; align-items: flex-end; }
+  .modal-container.enm-container {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+  }
+  .enm-title-input { font-size: 1.05rem; padding: 10px 16px 4px; }
+  .enm-toolbar { padding: 5px 14px; }
+  .enm-editor { padding: 8px 16px; min-height: 120px; }
+  .enm-bottom-bar { padding: 10px 14px 16px; }
+}
+
+@media (max-width: 480px) {
+  .modal-container.enm-container { border-radius: 20px 20px 0 0; max-height: 95vh; }
+  .enm-title-input { font-size: 1rem; }
+  .enm-bottom-bar { flex-wrap: wrap; }
+  .enm-bottom-right { width: 100%; justify-content: flex-end; }
+}
+
+
+/* ================================================================
+   MODAL — GENERIC (confirm, PIN, etc.)
+   ================================================================ */
+@media (max-width: 640px) {
+  .modal-box {
+    width: calc(100vw - 32px);
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+  .glass-modal { width: min(320px, calc(100vw - 32px)); padding: 24px 20px; }
+}
+
+@media (max-width: 480px) {
+  .glass-modal { width: calc(100vw - 24px); padding: 20px 16px; }
+  .pin-dots { gap: 10px; }
+  .dot { width: 40px; height: 50px; font-size: 20px; }
+}
+
+
+/* ================================================================
+   LOADING SCREEN
+   ================================================================ */
+@media (max-width: 480px) {
+  .loading-screen { padding: 20px; }
+}
+
+
+/* ================================================================
+   EMPTY STATE
+   ================================================================ */
+@media (max-width: 640px) {
+  .empty-state { padding: 48px 16px; font-size: 0.875rem; }
+  .empty-state::before { font-size: 2.4rem; }
+}
+
+
+/* ================================================================
+   TOAST NOTIFICATIONS
+   ================================================================ */
+@media (max-width: 640px) {
+  .toast-container {
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+  }
+  .toast-card {
+    min-width: 0;
+    max-width: 100%;
+    border-radius: 12px;
+    padding: 11px 14px;
+  }
+  .toast-message { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .toast-container { bottom: 12px; right: 8px; left: 8px; }
+}
+
+
+/* ================================================================
+   COMMAND PALETTE
+   ================================================================ */
+@media (max-width: 768px) {
+  .cp-overlay { padding-top: 50px; padding-left: 10px; padding-right: 10px; }
+  .cp-panel { border-radius: 16px; }
+  .cp-input { font-size: 15px; }
+  .cp-list { max-height: 55vh; }
+}
+
+@media (max-width: 480px) {
+  .cp-overlay { padding-top: 0; align-items: flex-start; }
+  .cp-panel { border-radius: 0 0 20px 20px; }
+  .cp-input { font-size: 14px; }
+  .cp-list { max-height: calc(60vh - 60px); }
+  .cp-group-label { padding: 6px 14px 2px; font-size: 10px; }
+  .cp-item { padding: 8px 12px; margin: 1px 4px; }
+}
+
+
+/* ================================================================
+   DIARY PAGE
+   ================================================================ */
+@media (max-width: 1024px) {
+  .diary-write-col { padding: 32px 36px 40px; }
+}
+
+@media (max-width: 900px) {
+  .diary-shell { flex-direction: column; }
+  .diary-write-col { max-width: 100%; padding: 28px 24px 32px; }
+  .diary-write-col::before { display: none; }
+  .diary-entries-col { width: 100%; min-width: 0; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
+}
+
+@media (max-width: 640px) {
+  .diary-write-col { padding: 20px 16px 24px; }
+  .diary-title-input { font-size: 1.5rem !important; margin-bottom: 14px; }
+  .diary-toolbar { gap: 2px; }
+  .diary-toolbar button { width: 30px; height: 30px; border-radius: 7px; }
+  .diary-editor-wrap { padding: 16px 14px; min-height: 200px; margin-bottom: 16px; }
+  .diary-write-footer { flex-wrap: wrap; gap: 8px; }
+  .diary-footer-left { gap: 4px; }
+  .diary-footer-right { width: 100%; }
+  .diary-save-btn { flex: 1; justify-content: center; padding: 10px 16px !important; font-size: 0.85rem !important; }
+  .diary-view-btn { padding: 10px 14px !important; font-size: 0.85rem !important; }
+  .diary-mood-btn { width: 34px !important; height: 34px !important; font-size: 1.1rem !important; border-radius: 10px !important; }
+}
+
+@media (max-width: 480px) {
+  .diary-write-col { padding: 16px 12px 20px; }
+  .diary-title-input { font-size: 1.3rem !important; }
+  .diary-write-header { margin-bottom: 16px; padding-bottom: 12px; flex-wrap: wrap; gap: 6px; }
+  .diary-write-date { font-size: 0.72rem; }
+  .diary-mood-row { gap: 8px; }
+  .diary-mood-label { font-size: 0.6rem; }
+  .diary-moods { gap: 4px; }
+  .diary-mood-btn { width: 30px !important; height: 30px !important; font-size: 1rem !important; }
+  .diary-editor-wrap { padding: 12px; min-height: 160px; }
+  .diary-save-btn { font-size: 0.8rem !important; }
+}
+
+
+/* ================================================================
+   DIARY PIN GATE
+   ================================================================ */
+@media (max-width: 640px) {
+  .diary-pin-overlay { padding: 16px; }
+  .diary-pin-card { padding: 28px 20px 24px !important; }
+}
+
+@media (max-width: 480px) {
+  .diary-pin-card { padding: 24px 16px 20px !important; border-radius: 20px !important; }
+  .diary-pin-input { font-size: 0.9rem !important; padding: 10px 40px 10px 12px !important; }
+  .diary-pin-btn { font-size: 0.9rem !important; padding: 11px !important; }
+}
+
+
+/* ================================================================
+   HABIT TRACKER
+   ================================================================ */
+@media (max-width: 768px) {
+  .ht-shell { padding: 20px 0 40px; }
+  .ht-header { margin-bottom: 20px; }
+  .ht-title { font-size: 1.4rem; }
+  .ht-stats-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ht-charts { grid-template-columns: 1fr; gap: 12px; }
+  .ht-chart-card--wide { grid-column: 1; }
+}
+
+@media (max-width: 640px) {
+  .ht-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .ht-add-btn { align-self: stretch; justify-content: center; }
+  .ht-tabs {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 2px;
+    scrollbar-width: none;
+  }
+  .ht-tabs::-webkit-scrollbar { display: none; }
+  .ht-tab { padding: 8px 14px; font-size: 0.78rem; flex-shrink: 0; }
+  .ht-stats-strip { grid-template-columns: repeat(2, 1fr); }
+  .ht-form-card { padding: 16px; gap: 12px; border-radius: 16px; }
+  .ht-form-row { flex-direction: column; align-items: flex-start; }
+  .ht-habit-card { padding: 14px 14px; }
+  .ht-hc-name { font-size: 0.875rem; }
+  .ht-check-btn { width: 34px; height: 34px; }
+  .ht-chart-card { padding: 16px 14px; }
+  .ht-calendar-wrap { padding: 16px 12px; }
+  .ht-cal-grid { gap: 3px; }
+}
+
+@media (max-width: 480px) {
+  .ht-title { font-size: 1.25rem; }
+  .ht-subtitle { font-size: 0.78rem; }
+  .ht-stats-strip { grid-template-columns: 1fr 1fr; }
+  .ht-stat { padding: 14px; }
+  .ht-stat-num { font-size: 1.2rem; }
+  .ht-progress-card { padding: 14px 16px; }
+  .ht-form-cancel, .ht-form-save { font-size: 0.8rem !important; padding: 8px 14px !important; }
+  .ht-cal-cell { border-radius: 5px; }
+  .ht-cal-num { font-size: 0.58rem; }
+  .ht-cal-dayname { font-size: 0.6rem; }
+}
+
+@media (max-width: 360px) {
+  .ht-stats-strip { grid-template-columns: 1fr; }
+  .ht-hc-actions { gap: 6px; }
+}
+
+
+/* ================================================================
+   AI TOOLS PANEL
+   ================================================================ */
+@media (max-width: 640px) {
+  .ai-tools-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .ai-tool-btn { padding: 8px 4px; border-radius: 10px; }
+  .ai-tool-emoji { font-size: 1.1rem; }
+  .ai-tool-label { font-size: 0.65rem; }
+  .ai-panel { border-radius: 12px; }
+}
+
+@media (max-width: 480px) {
+  .ai-tools-grid { grid-template-columns: repeat(4, 1fr); }
+  .ai-tool-btn { padding: 7px 2px; }
+  .ai-tool-label { font-size: 0.6rem; }
+}
+
+
+/* ================================================================
+   TEMPLATE PICKER MODAL
+   ================================================================ */
+
+/* Template picker is inline-styled, but we can target common classes */
+@media (max-width: 640px) {
+  /* Handled via JS onMouseEnter — nothing to override here */
+}
+
+
+/* ================================================================
+   COLLAB SHARE MODAL
+   ================================================================ */
+@media (max-width: 640px) {
+  /* CollabShareModal is inline-styled with Portal — overrides not possible */
+  /* Already uses max-width: 380, width: 100%, works fine */
+}
+
+
+/* ================================================================
+   OFFLINE INDICATOR
+   ================================================================ */
+@media (max-width: 480px) {
+  /* Inline-styled, reduce text on very small screens */
+  button[style*="border-radius: 20px"][style*="font-size: 12px"] {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+}
+
+
+/* ================================================================
+   PREMIUM GATE MODAL (Dashboard embed)
+   ================================================================ */
+@media (max-width: 640px) {
+  /* The outer container div with border-radius:28px */
+  div[style*="border-radius: 28px"][style*="max-width: 620px"] {
+    border-radius: 24px 24px 0 0 !important;
+    max-height: 95vh !important;
+    margin-top: auto !important;
+  }
+}
+
+
+/* ================================================================
+   SCROLLBAR — hide on touch devices
+   ================================================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices — hide scrollbars globally, keep functionality */
+  * { scrollbar-width: none !important; }
+  *::-webkit-scrollbar { display: none !important; }
+}
+
+
+/* ================================================================
+   LANDSCAPE PHONE — special cases
+   ================================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-header { height: 46px; }
+  .main-fullwidth { padding: 10px 14px; }
+  .diary-write-col { padding: 12px 16px; }
+  .diary-title-input { font-size: 1.2rem !important; margin-bottom: 8px; }
+  .diary-editor-wrap { min-height: 100px; padding: 10px 12px; }
+  .diary-mood-row { margin-bottom: 8px; }
+  .add-note-trigger { padding: 10px 14px; margin-bottom: 12px; }
+  .ht-shell { padding: 10px 0 20px; }
+  .cp-overlay { padding-top: 40px; }
+  .cp-list { max-height: 40vh; }
+}
+
+
+/* ================================================================
+   LARGE DESKTOP — container caps
+   ================================================================ */
+@media (min-width: 1400px) {
+  .main-fullwidth { padding: 36px 48px; }
+  .notes-grid-new { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .an-wrap { max-width: 720px; }
+  .add-note-trigger { max-width: 720px; }
+}
+
+@media (min-width: 1600px) {
+  .main-fullwidth { padding: 40px 60px; }
+  .notes-grid-new { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+}
+
+
+/* ================================================================
+   HEADER CRITICAL FIX — Prevent wrapping on all screen sizes
+   This is the root cause of layout breaking on tablets and phones.
+   ================================================================ */
+
+/* ── Force single row — NEVER wrap ───────────────────────────── */
+.header-container {
+  flex-direction: row !important;   /* kill any flex-direction:column from earlier rules */
+  flex-wrap: nowrap !important;
+  overflow: visible;
+  align-items: center;
+}
+
+/* All direct children must not overflow or grow unexpectedly */
+.header-container > * {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+/* Search tools are the only flex-grow item */
+.header-search-tools {
+  flex: 1 1 0;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* User nav must not grow */
+.user-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* PRO badge in header */
+.header-pro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── TABLET (≤ 1024px) ────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .main-header  { padding: 0 1.25rem; height: 56px; }
+  .user-nav     { gap: 3px; }
+  .user-greeting { display: none; }
+  .header-reindex-btn { display: none; }
+  .header-search-tools { max-width: 320px; }
+  .cp-trigger kbd { display: none; }
+  .cp-trigger { padding: 7px 10px; }
+}
+
+/* ── SMALL TABLET / LARGE PHONE (≤ 768px) ────────────────────── */
+@media (max-width: 768px) {
+  .main-header  { padding: 0 1rem; height: 54px; }
+  .user-greeting { display: none; }
+  .header-reindex-btn { display: none; }
+
+  /* Search becomes compact */
+  .header-search-tools { max-width: 200px; }
+  .cp-trigger { display: none; }
+}
+
+/* ── PHONE (≤ 640px) — HIDE search from header, move to sidebar ─ */
+@media (max-width: 640px) {
+  .main-header  { padding: 0 0.875rem; height: 52px; }
+
+  /* Hide entire search bar from header on phones */
+  .header-search-tools { display: none !important; }
+
+  /* Hide logo text (wordmark), show only icon */
+  .wu-wordmark { display: none !important; }
+
+  /* LogoFull gap reduction when text is hidden */
+  .header-container > div[style*="display: flex"] { gap: 0 !important; }
+
+  /* Minimal user nav */
+  .user-greeting  { display: none !important; }
+  .header-reindex-btn { display: none !important; }
+
+  /* Tighter icon buttons */
+  .theme-btn  { padding: 6px; width: 34px; height: 34px; }
+  .logout-btn { padding: 6px; width: 34px; height: 34px; }
+  .hamburger-btn { padding: 6px; }
+
+  /* PRO badge smaller */
+  .header-pro-badge { font-size: 9px; padding: 2px 6px; gap: 2px; }
+}
+
+/* ── SMALL PHONE (≤ 480px) ────────────────────────────────────── */
+@media (max-width: 480px) {
+  .main-header { padding: 0 0.75rem; height: 50px; }
+  .header-container { gap: 4px; }
+  .theme-btn  { width: 32px; height: 32px; }
+  .logout-btn { width: 32px; height: 32px; }
+}
+
+/* ── VERY SMALL (≤ 360px) ─────────────────────────────────────── */
+@media (max-width: 360px) {
+  .main-header { padding: 0 0.625rem; height: 48px; }
+  .header-container { gap: 3px; }
+  /* Hide PRO badge on very small phones to prevent overflow */
+  .header-pro-badge { display: none; }
+}
+
+/* ── SIDEBAR — Mobile search styles ─────────────────────────────── */
+.hs-mobile-search {
+  display: none; /* hidden on desktop, shown via media query */
+  align-items: center;
+  padding: 10px 14px 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 8px;
+}
+
+.hs-mobile-search-icon {
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+/* SmartSearchBar inside sidebar */
+.hs-mobile-search > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.hs-mobile-palette {
+  display: none; /* hidden on desktop */
+  align-items: center;
+  gap: 10px;
+  width: calc(100% - 28px);
+  margin: 8px 14px 0;
+  padding: 10px 14px;
+  background: #f5f5f7;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.hs-mobile-palette:hover { background: #eef2ff; color: var(--primary); border-color: var(--primary); }
+
+.hs-kbd {
+  margin-left: auto;
+  background: var(--border-color);
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: inherit;
+  border: 1px solid var(--border-color);
+}
+
+/* Show mobile search & palette in sidebar on phones */
+@media (max-width: 640px) {
+  .hs-mobile-search  { display: flex; }
+  .hs-mobile-palette { display: flex; }
+}
+
+/* Dark mode */
+.dark .hs-mobile-palette { background: var(--bg-surface); border-color: var(--border-color); }
+.dark .hs-mobile-palette:hover { background: rgba(99,102,241,0.12); border-color: var(--primary); color: #a5b4fc; }
+.dark .hs-kbd { background: var(--bg-light); border-color: var(--border-color); }
+
+/* ── Main content offset — account for header height ─────────── */
+.main-fullwidth {
+  /* Ensure content doesn't start under the header */
+  padding-top: 28px;
+}
+
+@media (max-width: 768px) {
+  .main-fullwidth { padding-top: 20px; }
+}
+
+@media (max-width: 480px) {
+  .main-fullwidth { padding-top: 16px; }
+}
+
+/* ── Notes grid — single column below 500px ──────────────────── */
+@media (max-width: 500px) {
+  .notes-grid-new {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+/* Override any conflicting header height rules */
+@media (max-width: 640px) {
+  .main-header {
+    height: auto !important;
+    min-height: 52px;
+    max-height: 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-header {
+    min-height: 50px;
+    max-height: 50px;
+  }
+}
+
+/* ── SmartSearchBar inner input — prevent overflow ───────────── */
+.header-search-tools .ssb-wrap,
+.header-search-tools > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ── Section title — prevent overflow on mobile ───────────────── */
+@media (max-width: 480px) {
+  .section-header-row { flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .tag-filter-bar { width: 100%; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+  .tag-filter-bar::-webkit-scrollbar { display: none; }
+}
+
+/* ── Habit tracker header fix on mobile ──────────────────────── */
+@media (max-width: 640px) {
+  .ht-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .ht-add-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 20px !important;
+  }
+}
+
+/* ── Add note area — fix on mobile ──────────────────────────── */
+@media (max-width: 640px) {
+  .add-note-area { margin-bottom: 16px; }
+  .add-note-trigger {
+    padding: 13px 16px;
+    font-size: 0.875rem;
+    border-radius: 14px;
+  }
 }

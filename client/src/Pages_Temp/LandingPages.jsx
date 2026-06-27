@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "./AuthModal";
+import { LogoMark, LogoWordmark, LogoFull } from "../components/Logo";
 
 // ── useInView hook ────────────────────────────────────────────────────────────
 const useInView = (threshold = 0.15) => {
@@ -241,6 +242,74 @@ const LandingPage = () => {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+
+        /* ── LANDING PAGE RESPONSIVE ───────────────────────────────────── */
+
+        /* Tablet (≤ 1024px) */
+        @media (max-width: 1024px) {
+          .wu-hero-section { padding: 80px 5vw 60px !important; }
+          .wu-features-grid { grid-template-columns: repeat(auto-fit, minmax(220px,1fr)) !important; }
+          .wu-preview-mockup { transform: none !important; }
+        }
+
+        /* Tablet portrait (≤ 768px) */
+        @media (max-width: 768px) {
+          .wu-nav { padding: 0 4vw !important; height: 58px !important; }
+          .wu-nav-links { display: none; }
+          .wu-hero-section { padding: 70px 5vw 50px !important; }
+          .wu-hero-sub { font-size: 16px !important; }
+          .wu-hero-buttons { gap: 10px !important; }
+          .wu-hero-btn-fill,
+          .wu-hero-btn-outline { padding: 13px 24px !important; font-size: 15px !important; }
+          .wu-stats-row { gap: 0 !important; }
+          .wu-preview-mockup { margin-top: 40px !important; transform: none !important; border-radius: 16px !important; }
+          .wu-features-grid { gap: 14px !important; }
+          .wu-feat-card { padding: 22px 18px !important; }
+          .wu-why-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+        }
+
+        /* Phone (≤ 640px) */
+        @media (max-width: 640px) {
+          .wu-nav { padding: 0 16px !important; }
+          .wu-nav-right { gap: 6px !important; }
+          .wu-nav-login { display: none !important; }
+          .wu-hero-section { padding: 60px 16px 40px !important; }
+          .wu-hero-sub { font-size: 15px !important; max-width: 100% !important; }
+          .wu-hero-buttons { flex-direction: column !important; align-items: stretch !important; }
+          .wu-hero-btn-fill,
+          .wu-hero-btn-outline { padding: 14px 20px !important; font-size: 15px !important; text-align: center !important; }
+          .wu-stats-row { flex-direction: row !important; flex-wrap: wrap !important; justify-content: center !important; margin-top: 32px !important; }
+          .wu-stat-item { flex: 1 !important; min-width: 100px !important; padding: 12px 8px !important; border-right: none !important; }
+          .wu-preview-mockup { display: none !important; }
+          .wu-features-grid { grid-template-columns: 1fr !important; max-width: 100% !important; }
+          .wu-feat-card { padding: 18px 16px !important; }
+          .wu-why-grid { grid-template-columns: 1fr 1fr !important; }
+          .wu-section { padding: 48px 16px !important; }
+          .wu-section-title { font-size: 24px !important; }
+          .wu-section-sub { font-size: 14px !important; margin-bottom: 32px !important; }
+          .wu-cta-section { padding: 64px 16px !important; }
+          .wu-cta-title { font-size: 26px !important; }
+          .wu-footer { padding: 28px 16px !important; flex-direction: column !important; gap: 20px !important; text-align: center !important; }
+          .wu-footer-links { gap: 16px !important; flex-wrap: wrap !important; justify-content: center !important; }
+        }
+
+        /* Small phone (≤ 480px) */
+        @media (max-width: 480px) {
+          .wu-hero-section { padding: 52px 14px 36px !important; }
+          .wu-hero-sub { font-size: 14px !important; }
+          .wu-why-grid { grid-template-columns: 1fr !important; }
+          .wu-why-card { padding: 18px 16px !important; }
+          .wu-features-grid { gap: 10px !important; }
+          .wu-feat-card-icon { width: 40px !important; height: 40px !important; }
+          .wu-nav-get-started { padding: 7px 14px !important; font-size: 13px !important; }
+        }
+
+        /* Very small (≤ 360px) */
+        @media (max-width: 360px) {
+          .wu-hero-section { padding: 44px 12px 28px !important; }
+          .wu-hero-btn-fill,
+          .wu-hero-btn-outline { padding: 12px 16px !important; font-size: 14px !important; }
+        }
       `}</style>
 
       {/* ── AUTH MODAL ── */}
@@ -253,25 +322,25 @@ const LandingPage = () => {
       )}
 
       {/* ── NAVBAR ── */}
-      <nav style={s.nav}>
-        <span style={s.logo}>Write Up.</span>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+      <nav className="wu-nav" style={s.nav}>
+        <LogoFull size={34} dark={d} />
+        <div className="wu-nav-links" style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {[["features","Features"],["preview","Preview"],["why","Why us"]].map(([id, label]) => (
             <button key={id} className="wu-nav-link" style={s.navLink} onClick={() => scrollTo(id)}>
               {label}
             </button>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="wu-nav-right" style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <button style={{ background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"6px 8px",borderRadius:8,color:d?"#94a3b8":"#64748b" }}
             onClick={() => setDark(v => !v)}>{d ? "☀" : "☾"}</button>
-          <button className="wu-btn-outline" style={s.btnOutline} onClick={handleLogin}>Log in</button>
-          <button style={s.btnFill} onClick={handleGetStarted}>Get started</button>
+          <button className="wu-btn-outline wu-nav-login" style={s.btnOutline} onClick={handleLogin}>Log in</button>
+          <button className="wu-nav-get-started" style={s.btnFill} onClick={handleGetStarted}>Get started</button>
         </div>
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{ padding: "100px 5vw 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section className="wu-hero-section" style={{ padding: "100px 5vw 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Background glow orbs */}
         <div style={{ position:"absolute",width:600,height:600,borderRadius:"50%",background:"radial-gradient(circle,#6366f120 0%,transparent 70%)",top:-150,left:"5%",pointerEvents:"none",filter:"blur(1px)" }}/>
         <div style={{ position:"absolute",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,#8b5cf620 0%,transparent 70%)",top:-50,right:"0%",pointerEvents:"none",filter:"blur(1px)" }}/>
@@ -291,23 +360,23 @@ const LandingPage = () => {
             at a time.
           </h1>
 
-          <p style={s.heroSub}>
+          <p className="wu-hero-sub" style={s.heroSub}>
             Notes, diary, habits, and reminders — beautifully unified. Your thoughts, your goals — all in one secure place.
           </p>
 
-          <div style={{ display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap" }}>
-            <button className="wu-big-fill" style={s.bigBtnFill} onClick={handleGetStarted}>
+          <div className="wu-hero-buttons" style={{ display:"flex",justifyContent:"center",gap:14,flexWrap:"wrap" }}>
+            <button className="wu-big-fill wu-hero-btn-fill" style={s.bigBtnFill} onClick={handleGetStarted}>
               Start for free →
             </button>
-            <button className="wu-big-outline" style={s.bigBtnOutline} onClick={() => scrollTo("features")}>
+            <button className="wu-big-outline wu-hero-btn-outline" style={s.bigBtnOutline} onClick={() => scrollTo("features")}>
               See features
             </button>
           </div>
 
           {/* Stats */}
-          <div style={{ display:"flex",justifyContent:"center",gap:0,marginTop:48,flexWrap:"wrap", maxWidth:480, margin:"48px auto 0" }}>
+          <div className="wu-stats-row" style={{ display:"flex",justifyContent:"center",gap:0,marginTop:48,flexWrap:"wrap", maxWidth:480, margin:"48px auto 0" }}>
             {[["10k+","Notes created"],["500+","Daily users"],["99%","Uptime"]].map(([n,l], i) => (
-              <div key={n} style={{ textAlign:"center", flex:1, padding:"16px 20px", borderRight: i < 2 ? `1px solid ${d?"#1e293b":"#e5e7eb"}` : "none" }}>
+              <div className="wu-stat-item" key={n} style={{ textAlign:"center", flex:1, padding:"16px 20px", borderRight: i < 2 ? `1px solid ${d?"#1e293b":"#e5e7eb"}` : "none" }}>
                 <div style={{ fontSize:30,fontWeight:800,color:d?"#f1f5f9":"#0f172a",letterSpacing:"-1px" }}>{n}</div>
                 <div style={{ fontSize:12.5,color:d?"#94a3b8":"#64748b",marginTop:4,fontWeight:500 }}>{l}</div>
               </div>
@@ -315,7 +384,7 @@ const LandingPage = () => {
           </div>
 
           {/* App mockup */}
-          <div id="preview" style={{
+          <div id="preview" className="wu-preview-mockup" style={{
             margin:"60px auto 0", maxWidth:900, borderRadius:24,
             border:`1px solid ${d?"#1e293b":"#e2e8f0"}`,
             background:d?"#0f172a":"#f5f5f7", overflow:"hidden",
@@ -330,7 +399,7 @@ const LandingPage = () => {
               <span style={{ marginLeft:10,fontSize:12,color:d?"#64748b":"#94a3b8" }}>localhost:5173/dashboard</span>
             </div>
             <div style={{ display:"flex",alignItems:"center",gap:12,padding:"12px 20px",borderBottom:`1px solid ${d?"#1e293b":"#e2e8f0"}`,background:d?"#0f172a":"#fff" }}>
-              <span style={{ fontWeight:700,fontSize:14,color:d?"#f1f5f9":"#0f172a" }}>Write Up.</span>
+              <LogoFull size={22} dark={d} />
               <div style={{ flex:1,maxWidth:280,height:28,borderRadius:7,background:d?"#1e293b":"#f1f5f9",display:"flex",alignItems:"center",padding:"0 10px",fontSize:12,color:d?"#64748b":"#94a3b8" }}>
                 Search your notes…
               </div>
@@ -354,16 +423,16 @@ const LandingPage = () => {
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="features" style={s.section(d?"#0f172a":"#f8fafc")}>
+      <section id="features" className="wu-section" style={s.section(d?"#0f172a":"#f8fafc")}>
         <Reveal>
-          <h2 style={s.sectionTitle}>Everything you need, nothing you don't</h2>
-          <p style={s.sectionSub}>Six powerful tools in one app — built for people who want to think clearly and live intentionally.</p>
+          <h2 className="wu-section-title" style={s.sectionTitle}>Everything you need, nothing you don't</h2>
+          <p className="wu-section-sub" style={s.sectionSub}>Six powerful tools in one app — built for people who want to think clearly and live intentionally.</p>
         </Reveal>
-        <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20,maxWidth:1060,margin:"0 auto" }}>
+        <div className="wu-features-grid" style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20,maxWidth:1060,margin:"0 auto" }}>
           {FEATURES.map((f, i) => (
             <Reveal key={f.title} delay={i * 0.07}>
               <div className="wu-feat-card" style={s.featureCard}>
-                <div style={{ width:46,height:46,borderRadius:12,background:d?`${f.color}22`:f.bg,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16 }}>
+                <div className="wu-feat-card-icon" style={{ width:46,height:46,borderRadius:12,background:d?`${f.color}22`:f.bg,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16 }}>
                   <span style={{ color:f.color }}>{f.icon}</span>
                 </div>
                 <div style={{ fontSize:16,fontWeight:700,color:d?"#f1f5f9":"#0f172a",marginBottom:8 }}>{f.title}</div>
@@ -375,12 +444,12 @@ const LandingPage = () => {
       </section>
 
       {/* ── WHY ── */}
-      <section id="why" style={s.section(d?"#0b0f1a":"#fff")}>
+      <section id="why" className="wu-section" style={s.section(d?"#0b0f1a":"#fff")}>
         <Reveal>
-          <h2 style={s.sectionTitle}>Why thousands choose Write Up</h2>
-          <p style={s.sectionSub}>Simple. Powerful. Private. Built for real productivity.</p>
+          <h2 className="wu-section-title" style={s.sectionTitle}>Why thousands choose Write Up</h2>
+          <p className="wu-section-sub" style={s.sectionSub}>Simple. Powerful. Private. Built for real productivity.</p>
         </Reveal>
-        <div style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,maxWidth:860,margin:"0 auto" }}>
+        <div className="wu-why-grid" style={{ display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,maxWidth:860,margin:"0 auto" }}>
           {WHY.map((w,i) => (
             <Reveal key={w.title} delay={i*0.08}>
               <div className="wu-why-card" style={s.whyCard}>
@@ -413,9 +482,9 @@ const LandingPage = () => {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ padding:"40px 5vw",borderTop:`1px solid ${d?"#1e293b":"#e2e8f0"}`,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:16 }}>
-        <span style={s.logo}>Write Up.</span>
-        <div style={{ display:"flex",gap:24 }}>
+      <footer className="wu-footer" style={{ padding:"40px 5vw",borderTop:`1px solid ${d?"#1e293b":"#e2e8f0"}`,display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:16 }}>
+        <LogoFull size={30} dark={d} />
+        <div className="wu-footer-links" style={{ display:"flex",gap:24 }}>
           {["About","Features","Contact","Privacy"].map(l => (
             <a key={l} href="#" style={{ fontSize:13,color:d?"#64748b":"#94a3b8",textDecoration:"none" }}>{l}</a>
           ))}

@@ -72,23 +72,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE /api/diary/:id — soft-delete
-router.delete("/:id", async (req, res) => {
-  try {
-    await Note.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id, isDiary: true },
-      { isDeleted: true, deletedAt: new Date() }
-    );
-    res.json({ message: "Entry deleted" });
-  } catch (err) {
-    res.status(500).json({ message: "Delete failed" });
-  }
-});
-
-module.exports = router;
-
-
 // DELETE /api/diary/reset-encryption
+// MUST be defined BEFORE /:id so Express doesn't match "reset-encryption" as an id.
 // Called during PIN reset — deletes ALL encrypted diary entries for this user.
 // Safe because entries encrypted with the old key are permanently unreadable anyway.
 router.delete("/reset-encryption", async (req, res) => {
@@ -104,3 +89,18 @@ router.delete("/reset-encryption", async (req, res) => {
     res.status(500).json({ message: "Failed to delete encrypted entries" });
   }
 });
+
+// DELETE /api/diary/:id — soft-delete (MUST come after specific routes like /reset-encryption)
+router.delete("/:id", async (req, res) => {
+  try {
+    await Note.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id, isDiary: true },
+      { isDeleted: true, deletedAt: new Date() }
+    );
+    res.json({ message: "Entry deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed" });
+  }
+});
+
+module.exports = router;

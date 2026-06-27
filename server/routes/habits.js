@@ -21,7 +21,14 @@ router.get("/", async (req, res) => {
 // POST create habit
 router.post("/", async (req, res) => {
   try {
-    const habit = await Habit.create({ ...req.body, user: req.user._id });
+    const { name, freq, color } = req.body;
+    if (!name || !name.trim()) return res.status(400).json({ message: "Habit name is required" });
+    const habit = await Habit.create({
+      name:  name.trim(),
+      freq:  freq  || "daily",
+      color: color || "#3b82f6",
+      user:  req.user._id,
+    });
     res.status(201).json(habit);
   } catch (e) { res.status(500).json({ message: "Create failed" }); }
 });

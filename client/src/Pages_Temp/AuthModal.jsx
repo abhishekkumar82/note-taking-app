@@ -214,14 +214,44 @@ const AuthModal = ({mode="login", onClose, onSwitchMode}) => {
 
   return (
     <>
+      {/* Responsive overrides */}
+      <style>{`
+        .am-modal {
+          background: #fff;
+          border-radius: 24px;
+          padding: 36px 32px 28px;
+          width: 100%;
+          max-width: 420px;
+          box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+          border: 1px solid #e2e8f0;
+          font-family: 'Inter','Segoe UI',sans-serif;
+          position: relative;
+          max-height: 90vh;
+          overflow-y: auto;
+        }
+        @media (max-width: 640px) {
+          .am-modal {
+            border-radius: 20px 20px 0 0 !important;
+            padding: 28px 20px 24px !important;
+            max-height: 92vh !important;
+          }
+          .am-overlay { align-items: flex-end !important; padding: 0 !important; }
+        }
+        @media (max-width: 480px) {
+          .am-modal { padding: 24px 16px 20px !important; border-radius: 18px 18px 0 0 !important; }
+        }
+        @media (max-width: 360px) {
+          .am-modal { padding: 20px 14px 18px !important; }
+        }
+      `}</style>
+
       {/* Backdrop */}
       <div ref={overlayRef}
+        className="am-overlay"
         style={{position:"fixed",inset:0,background:"rgba(15,23,42,0.45)",backdropFilter:"blur(4px)",zIndex:999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}
         onClick={e => e.target===overlayRef.current && onClose?.()}>
 
-        <div style={{background:"#fff",borderRadius:24,padding:"36px 32px 28px",width:"100%",maxWidth:420,
-          boxShadow:"0 24px 64px rgba(0,0,0,0.15)",border:"1px solid #e2e8f0",
-          fontFamily:"'Inter','Segoe UI',sans-serif",position:"relative",maxHeight:"90vh",overflowY:"auto"}}>
+        <div className="am-modal">
 
           {/* Close */}
           <button onClick={onClose}

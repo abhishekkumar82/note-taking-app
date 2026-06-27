@@ -9,9 +9,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const APP   = "Write Up";
-const FRONT = process.env.FRONTEND_URL || "http://localhost:5173";
-const FROM  = `"${APP}" <${process.env.EMAIL_USER}>`;
+const APP     = "Write Up";
+const FRONT   = process.env.FRONTEND_URL  || "http://localhost:5173";
+const BACKEND = process.env.BACKEND_URL   || "http://localhost:9090";  // for server-side links
+const FROM    = `"${APP}" <${process.env.EMAIL_USER}>`;
 
 const html = (body) => `
 <!DOCTYPE html>
@@ -68,7 +69,10 @@ exports.sendLoginOtpEmail = async (to, otp) => {
 
 // ── 2. Email Verification ─────────────────────────────────────────────────────
 exports.sendVerificationEmail = async (to, name, token) => {
-  const link = `${FRONT}/api/auth/verify-email?token=${token}`;
+  // IMPORTANT: This must point to the BACKEND server (9090), not the frontend.
+  // The /api/auth/verify-email route is an Express route that redirects to the
+  // frontend after verifying. Pointing to the frontend (5173) returns a 404.
+  const link = `${BACKEND}/api/auth/verify-email?token=${token}`;
   await transporter.sendMail({
     from: FROM, to,
     subject: `Verify your ${APP} email`,

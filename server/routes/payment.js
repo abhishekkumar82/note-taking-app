@@ -20,9 +20,11 @@ const razorpay = new Razorpay({
 });
 
 // ── Subscription plans ─────────────────────────────────────────────────────
+// Razorpay amounts are in PAISE (1 INR = 100 paise).
+// ₹99  = 9900 paise | ₹799 = 79900 paise
 const PLANS = {
-  monthly: { amount: 990,  label: "Monthly",  days: 30  }, 
-  yearly:  { amount: 7990, label: "Yearly",   days: 365 },  
+  monthly: { amount: 9900,  label: "Monthly",  days: 30  },
+  yearly:  { amount: 79900, label: "Yearly",   days: 365 },
 };
 
 // ── POST /api/payment/create-order ────────────────────────────────────────

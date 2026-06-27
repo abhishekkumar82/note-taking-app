@@ -36,7 +36,6 @@ const UserSchema = new Schema({
   premiumExpiresAt: { type: Date,    default: null },
   lastPaymentId:    { type: String,  default: null },  // razorpay payment_id
   lastOrderId:      { type: String,  default: null },  // razorpay order_id
-// server/models/User.js — "💎 Premium Subscription" section mein add karo
 
   // ── Timestamps ─────────────────────────────────────────────────────────────
   createdAt: { type: Date, default: Date.now },
