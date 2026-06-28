@@ -34,6 +34,9 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Health check — used by keep-alive cron to prevent Render free tier sleep
+app.get("/health", (req, res) => res.json({ status: "ok" }));
+
 // Session setup
 app.use(session({
   secret: process.env.SESSION_SECRET || 'writeup-session-secret-change-in-prod',

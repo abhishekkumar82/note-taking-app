@@ -8,9 +8,20 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const cron = require("node-cron");
+const https = require("https");
 const Note = require("../models/Notes");
 const User = require("../models/User");
 const { sendReminderWarningEmail } = require("./sendEmail");
+
+// ── Keep Render free tier alive — ping self every 14 minutes ─────────────────
+const SELF_URL = process.env.BACKEND_URL || null;
+if (SELF_URL) {
+  cron.schedule("*/14 * * * *", () => {
+    https.get(`${SELF_URL}/health`, (res) => {
+      console.log(`[keep-alive] ping → ${res.statusCode}`);
+    }).on("error", () => {});
+  });
+}
 
 const MAX_NOTIFY = 5; // FEATURE 2: hard cap on how many times we push a reminder
 
