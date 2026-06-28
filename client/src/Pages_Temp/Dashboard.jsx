@@ -467,9 +467,42 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
     <>
     {/* ── Trial Banner ─────────────────────────────────────────────────────── */}
     {isTrial && (
-      <div className="trial-banner">
-        <span>🎁 Free trial — <strong>{trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}</strong> remaining. Unlock all features forever.</span>
-        <button className="trial-banner-btn" onClick={() => handleSetActiveSection("premium")}>
+      <div style={{
+        width: "100%",
+        padding: "12px 20px",
+        background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "12px",
+        flexWrap: "wrap",
+        position: "sticky",
+        top: 64,
+        zIndex: 90,
+        boxSizing: "border-box",
+      }}>
+        <span style={{ color: "#fff", fontSize: 13.5, fontWeight: 500 }}>
+          🎁 Free trial —{" "}
+          <strong style={{ fontWeight: 800 }}>
+            {trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}
+          </strong>{" "}
+          remaining. Unlock all features forever.
+        </span>
+        <button
+          onClick={() => handleSetActiveSection("premium")}
+          style={{
+            background: "#fff",
+            color: "#6366f1",
+            border: "none",
+            borderRadius: 8,
+            padding: "6px 16px",
+            fontSize: 13,
+            fontWeight: 700,
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            fontFamily: "inherit",
+          }}
+        >
           Upgrade now →
         </button>
       </div>
