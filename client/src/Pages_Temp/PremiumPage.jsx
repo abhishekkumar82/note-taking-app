@@ -26,9 +26,12 @@ const FEATURES = [
   { name: "Priority Support",          free: false, premium: true,  icon: "⚡" },
 ];
 
+const MONTHLY = parseInt(import.meta.env.VITE_PRICE_MONTHLY_INR || "99");
+const YEARLY  = parseInt(import.meta.env.VITE_PRICE_YEARLY_INR  || "799");
+
 const PLANS = {
-  monthly: { label: "Monthly", amount: 99,  amountPaise: 9900,  period: "month", badge: null },
-  yearly:  { label: "Yearly",  amount: 799, amountPaise: 79900, period: "year",  badge: "Save 33%" },
+  monthly: { label: "Monthly", amount: MONTHLY, amountPaise: MONTHLY * 100, period: "month", badge: null },
+  yearly:  { label: "Yearly",  amount: YEARLY,  amountPaise: YEARLY  * 100, period: "year",  badge: `Save ${Math.round((1 - YEARLY / (MONTHLY * 12)) * 100)}%` },
 };
 
 const Check = () => (
@@ -228,7 +231,7 @@ const PremiumPage = ({ onClose }) => {
         </div>
         {isYearly && (
           <div style={s.savingPill}>
-            🎉 You save ₹{(99 * 12 - 799)} compared to monthly
+            🎉 You save ₹{(MONTHLY * 12 - YEARLY)} compared to monthly
           </div>
         )}
       </div>

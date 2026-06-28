@@ -19,12 +19,15 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// ── Subscription plans ─────────────────────────────────────────────────────
+// ── Subscription plans — prices come from env vars so you can change anytime ──
 // Razorpay amounts are in PAISE (1 INR = 100 paise).
-// ₹99  = 9900 paise | ₹799 = 79900 paise
+// Set on Render: PRICE_MONTHLY_INR=99  PRICE_YEARLY_INR=799
+const MONTHLY_INR = parseInt(process.env.PRICE_MONTHLY_INR || "99");
+const YEARLY_INR  = parseInt(process.env.PRICE_YEARLY_INR  || "799");
+
 const PLANS = {
-  monthly: { amount: 9900,  label: "Monthly",  days: 30  },
-  yearly:  { amount: 79900, label: "Yearly",   days: 365 },
+  monthly: { amount: MONTHLY_INR * 100, label: "Monthly", days: 30  },
+  yearly:  { amount: YEARLY_INR  * 100, label: "Yearly",  days: 365 },
 };
 
 // ── POST /api/payment/create-order ────────────────────────────────────────
