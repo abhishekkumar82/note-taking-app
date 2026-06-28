@@ -34,8 +34,11 @@ const UserSchema = new Schema({
   premiumPlan:      { type: String,  enum: ["monthly", "yearly"], default: null },
   premiumSince:     { type: Date,    default: null },
   premiumExpiresAt: { type: Date,    default: null },
-  lastPaymentId:    { type: String,  default: null },  // razorpay payment_id
-  lastOrderId:      { type: String,  default: null },  // razorpay order_id
+  lastPaymentId:    { type: String,  default: null },
+  lastOrderId:      { type: String,  default: null },
+
+  // ── 🎁 Free Trial ─────────────────────────────────────────────────────────
+  trialEndsAt:      { type: Date,    default: null },  // set on first signup
 
   // ── Timestamps ─────────────────────────────────────────────────────────────
   createdAt: { type: Date, default: Date.now },

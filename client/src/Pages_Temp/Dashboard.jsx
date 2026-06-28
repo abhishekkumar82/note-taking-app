@@ -1,5 +1,6 @@
 // src/pages/Dashboard.jsx
 import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import api from "../utils/axiosInstance";
 import NoteCard from "../components/NoteCard";
 import AddNote from "../components/AddNote";
@@ -120,7 +121,10 @@ const SortableNoteCard = ({ note, ...props }) => {
   );
 };
 
+const VALID_SECTIONS = ["notes","diary","habits","reminders","archive","trash","premium"];
+
 const Dashboard = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [notes, setNotes]               = useState([]);
   const [archivedNotes, setArchivedNotes] = useState([]);
   const [userName, setUserName]         = useState("");
@@ -128,7 +132,8 @@ const Dashboard = () => {
   const [editingNote, setEditingNote]   = useState(null);
   const [selectedTags, setSelectedTags]     = useState([]);
   const [selectedFolder, setSelectedFolder] = useState("All");
-  const [activeSection, setActiveSection]   = useState("notes");
+  const initialSection = VALID_SECTIONS.includes(searchParams.get("page")) ? searchParams.get("page") : "notes";
+  const [activeSection, setActiveSection]   = useState(initialSection);
   const [folders, setFolders]           = useState([]);
   const [searchTerm, setSearchTerm]     = useState("");
   const [lastDeleted, setLastDeleted]   = useState(null);
@@ -149,7 +154,7 @@ const { isOnline, syncStatus, pendingCount, manualSync } = useOfflineSync({ show
   // ── Premium gate state ────────────────────────────────────────────────────
   const [premiumGate, setPremiumGate] = useState({ show: false, featureName: "" });
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const { isPremium, loading: premiumLoading } = usePremium();
+  const { isPremium, isTrial, trialEndsAt, loading: premiumLoading } = usePremium();
 
   const notifyCountRef = useRef({});
   const pinRef  = useRef(null);
@@ -168,14 +173,13 @@ const { isOnline, syncStatus, pendingCount, manualSync } = useOfflineSync({ show
   // ── Intercepted setActiveSection — checks premium for gated sections ──────
 // In Dashboard.jsx — replace handleSetActiveSection
 const handleSetActiveSection = (section) => {
-  // While premium status is still loading, don't make any gate decision yet
   if (PREMIUM_SECTIONS.includes(section) && premiumLoading) {
-    // Optimistically allow — if they're not premium, the page itself will show nothing sensitive
     setActiveSection(section);
+    setSearchParams({ page: section }, { replace: true });
     return;
   }
 
-  if (PREMIUM_SECTIONS.includes(section) && !isPremium) {
+  if (PREMIUM_SECTIONS.includes(section) && !isPremium && !isTrial) {
     const LABELS_GATE = {
       diary:  "Personal Diary",
       habits: "Habit Tracker",
@@ -186,6 +190,12 @@ const handleSetActiveSection = (section) => {
   }
 
   setActiveSection(section);
+  // Sync URL — /dashboard?page=diary etc. (omit for default "notes")
+  if (section === "notes") {
+    setSearchParams({}, { replace: true });
+  } else {
+    setSearchParams({ page: section }, { replace: true });
+  }
 };
 
   // ── Fetch active notes ───────────────────────────────────────────────────────
@@ -448,8 +458,22 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
   const isSpecial     = ["diary", "habits"].includes(activeSection);
   const isArchiveView = activeSection === "archived";
 
+  // Trial days remaining
+  const trialDaysLeft = isTrial && trialEndsAt
+    ? Math.max(0, Math.ceil((new Date(trialEndsAt) - Date.now()) / (1000 * 60 * 60 * 24)))
+    : 0;
+
   return (
     <>
+    {/* ── Trial Banner ─────────────────────────────────────────────────────── */}
+    {isTrial && (
+      <div className="trial-banner">
+        <span>🎁 Free trial — <strong>{trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}</strong> remaining. Unlock all features forever.</span>
+        <button className="trial-banner-btn" onClick={() => handleSetActiveSection("premium")}>
+          Upgrade now →
+        </button>
+      </div>
+    )}
     <OfflineIndicator
   isOnline={isOnline}
   syncStatus={syncStatus}

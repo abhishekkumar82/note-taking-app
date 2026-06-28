@@ -33,11 +33,13 @@ const {
   sendLoginOtpEmail,
 } = require("../utils/sendEmail");
 
-const JWT_SECRET = process.env.JWT_SECRET   || "writeup-super-secret-key-change-in-prod";
-const FRONTEND   = process.env.FRONTEND_URL || "http://localhost:5173";
+const JWT_SECRET  = process.env.JWT_SECRET   || "writeup-super-secret-key-change-in-prod";
+const FRONTEND    = process.env.FRONTEND_URL || "http://localhost:5173";
+const TRIAL_DAYS  = parseInt(process.env.TRIAL_DAYS || "3");
 
 const signToken   = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: "30d" });
 const randomToken = () => crypto.randomBytes(32).toString("hex");
+const trialExpiry = () => new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
 const randomOtp   = () => Math.floor(100000 + Math.random() * 900000).toString();
 const validEmail  = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e).toLowerCase());
 
@@ -159,7 +161,8 @@ router.post("/verify-otp", async (req, res) => {
         email:           key,
         displayName:     key.split("@")[0],
         firstName:       key.split("@")[0],
-        isEmailVerified: true, // OTP proves email ownership
+        isEmailVerified: true,
+        trialEndsAt:     trialExpiry(),
         // password intentionally NOT set — user can add one via forgot-password
       });
     } else if (!user.isEmailVerified) {
@@ -240,7 +243,8 @@ router.post("/register", async (req, res) => {
       displayName:     name.trim(),
       firstName:       name.trim().split(" ")[0],
       lastName:        name.trim().split(" ").slice(1).join(" ") || "",
-      isEmailVerified: false, // will be set true when OTP verified
+      isEmailVerified: false,
+      trialEndsAt:     trialExpiry(),
     });
 
     // Send OTP to verify email (same flow as Quick OTP login)

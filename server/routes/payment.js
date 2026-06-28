@@ -106,20 +106,27 @@ router.post("/verify", isLoggedIn, async (req, res) => {
 router.get("/status", isLoggedIn, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select(
-      "isPremium premiumPlan premiumSince premiumExpiresAt"
+      "isPremium premiumPlan premiumSince premiumExpiresAt trialEndsAt"
     );
 
-    // Auto-expire check
+    // Auto-expire paid subscription
     if (user.isPremium && user.premiumExpiresAt && new Date() > user.premiumExpiresAt) {
       await User.findByIdAndUpdate(req.user._id, { isPremium: false });
-      return res.json({ isPremium: false, expired: true });
+      return res.json({ isPremium: false, expired: true, isTrial: false });
     }
+
+    // Trial status
+    const now      = new Date();
+    const isTrial  = !user.isPremium && user.trialEndsAt && now < new Date(user.trialEndsAt);
+    const trialEndsAt = user.trialEndsAt || null;
 
     res.json({
       isPremium:        user.isPremium || false,
       premiumPlan:      user.premiumPlan || null,
       premiumSince:     user.premiumSince || null,
       premiumExpiresAt: user.premiumExpiresAt || null,
+      isTrial,
+      trialEndsAt,
     });
   } catch {
     res.status(500).json({ message: "Status check failed" });
