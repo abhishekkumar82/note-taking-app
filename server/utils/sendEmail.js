@@ -1,13 +1,45 @@
 // server/utils/sendEmail.js
-const { Resend } = require("resend");
+// Supports two providers via env vars:
+//   RESEND_API_KEY  → uses Resend (requires custom domain for all-user delivery)
+//   EMAIL_USER + EMAIL_PASS → uses Brevo SMTP (recommended, works for any email)
+//
+// Brevo setup (free, 300 emails/day, no domain needed):
+//   1. Sign up at brevo.com
+//   2. SMTP & API → SMTP → copy host/port/login/password
+//   3. Set on Render: EMAIL_USER=your-brevo-login  EMAIL_PASS=your-brevo-smtp-password
+//      EMAIL_HOST=smtp-relay.brevo.com  EMAIL_PORT=587
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require("nodemailer");
+const { Resend }  = require("resend");
 
 const APP     = "Write Up";
-const FRONT   = process.env.FRONTEND_URL  || "http://localhost:5173";
-const BACKEND = process.env.BACKEND_URL   || "http://localhost:9090";
-// Use Resend's free onboarding domain until you add a custom domain
-const FROM    = process.env.EMAIL_FROM || "WriteUp <onboarding@resend.dev>";
+const FRONT   = process.env.FRONTEND_URL || "http://localhost:5173";
+const BACKEND = process.env.BACKEND_URL  || "http://localhost:9090";
+
+// ── Pick provider ─────────────────────────────────────────────────────────────
+let sendRaw;
+
+if (process.env.RESEND_API_KEY) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const FROM   = process.env.EMAIL_FROM || "WriteUp <onboarding@resend.dev>";
+  sendRaw = ({ to, subject, html }) =>
+    resend.emails.send({ from: FROM, to, subject, html });
+
+} else {
+  // Brevo / any SMTP provider
+  const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST || "smtp-relay.brevo.com",
+    port: parseInt(process.env.EMAIL_PORT || "587"),
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  const FROM = process.env.EMAIL_FROM || `"${APP}" <${process.env.EMAIL_USER}>`;
+  sendRaw = ({ to, subject, html }) =>
+    transporter.sendMail({ from: FROM, to, subject, html });
+}
 
 const html = (body) => `
 <!DOCTYPE html>
@@ -50,7 +82,7 @@ const html = (body) => `
 `;
 
 const send = (to, subject, body) =>
-  resend.emails.send({ from: FROM, to, subject, html: html(body) });
+  sendRaw({ to, subject, html: html(body) });
 
 // ── 1. Login OTP ──────────────────────────────────────────────────────────────
 exports.sendLoginOtpEmail = (to, otp) =>
