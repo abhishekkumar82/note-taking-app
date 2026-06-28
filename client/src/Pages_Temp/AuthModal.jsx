@@ -157,7 +157,8 @@ const AuthModal = ({mode="login", onClose, onSwitchMode}) => {
       }
       // Signup: OTP sent to verify email — show OTP screen
       if (res.data.requiresOtp) {
-        setEmail(res.data.email || email);
+        setOtpEmail(res.data.email || email);
+        setOtpTimer(60);
         setScreen("otp");
         setMsg("OTP sent to your email! Verify to complete sign up.");
         return;
