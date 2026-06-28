@@ -97,8 +97,12 @@ router.post("/send-otp", async (req, res) => {
       console.warn(`[send-otp] ⚠️  Email delivery failed: ${emailErr.message}`);
     }
 
-    // Always log to terminal for development convenience
-    console.log(`\n🔑  Login OTP for ${email}  →  ${otp}  (valid 10 min)${emailSent ? " ✉️ Email sent" : " ⚠️ Check terminal"}\n`);
+    // Dev only — never log OTP in production (security risk)
+    if (process.env.NODE_ENV !== "production") {
+      console.log(`\n🔑  Login OTP for ${email}  →  ${otp}  (valid 10 min)\n`);
+    } else if (!emailSent) {
+      console.warn(`[send-otp] Email failed for ${email} — check email provider config`);
+    }
 
     res.json({
       message: emailSent
