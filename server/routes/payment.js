@@ -115,10 +115,21 @@ router.get("/status", isLoggedIn, async (req, res) => {
       return res.json({ isPremium: false, expired: true, isTrial: false });
     }
 
-    // Trial status
-    const now      = new Date();
-    const isTrial  = !user.isPremium && user.trialEndsAt && now < new Date(user.trialEndsAt);
-    const trialEndsAt = user.trialEndsAt || null;
+    const TRIAL_DAYS = parseInt(process.env.TRIAL_DAYS || "3");
+    const now = new Date();
+
+    // If user has no trialEndsAt (signed up before this feature),
+    // backfill it based on createdAt so existing users also get a trial
+    let trialEndsAt = user.trialEndsAt;
+    if (!trialEndsAt && !user.isPremium) {
+      const fullUser  = await User.findById(req.user._id).select("createdAt");
+      const computed  = new Date(fullUser.createdAt.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
+      trialEndsAt     = computed;
+      // Save it so we don't recompute every time
+      await User.findByIdAndUpdate(req.user._id, { trialEndsAt: computed });
+    }
+
+    const isTrial = !user.isPremium && trialEndsAt && now < new Date(trialEndsAt);
 
     res.json({
       isPremium:        user.isPremium || false,
