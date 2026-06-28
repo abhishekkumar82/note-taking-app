@@ -155,6 +155,13 @@ const AuthModal = ({mode="login", onClose, onSwitchMode}) => {
         loginOk(res.data.token);
         return;
       }
+      // Signup: OTP sent to verify email — show OTP screen
+      if (res.data.requiresOtp) {
+        setEmail(res.data.email || email);
+        setScreen("otp");
+        setMsg("OTP sent to your email! Verify to complete sign up.");
+        return;
+      }
       if (res.data.requiresVerification) {
         if (res.data.token) localStorage.setItem("wu_token", res.data.token);
         setScreen("verifyNotice"); setMsg(res.data.message);

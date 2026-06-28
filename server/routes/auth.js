@@ -228,32 +228,34 @@ router.post("/register", async (req, res) => {
     }
 
     // ── NEW ACCOUNT PATH ──────────────────────────────────────────────────────
-    const verifyToken   = randomToken();
-    const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    const hash          = await bcrypt.hash(password, 12);
+    const hash = await bcrypt.hash(password, 12);
 
     const user = await User.create({
-      email:              email.toLowerCase(),
-      password:           hash,
-      displayName:        name.trim(),
-      firstName:          name.trim().split(" ")[0],
-      lastName:           name.trim().split(" ").slice(1).join(" ") || "",
-      isEmailVerified:    false,
-      emailVerifyToken:   verifyToken,
-      emailVerifyExpires: verifyExpires,
+      email:           email.toLowerCase(),
+      password:        hash,
+      displayName:     name.trim(),
+      firstName:       name.trim().split(" ")[0],
+      lastName:        name.trim().split(" ").slice(1).join(" ") || "",
+      isEmailVerified: false, // will be set true when OTP verified
     });
 
+    // Send OTP to verify email (same flow as Quick OTP login)
+    const otp       = randomOtp();
+    const expiresAt = Date.now() + 10 * 60 * 1000;
+    otpStore.set(email.toLowerCase(), { otp, expiresAt, attempts: 0 });
+
     try {
-      await sendVerificationEmail(email, name.trim().split(" ")[0], verifyToken);
+      await sendLoginOtpEmail(email, otp);
+      console.log(`[register] OTP sent to ${email}`);
     } catch (mailErr) {
-      console.error("[register] email failed:", mailErr.message);
+      console.warn(`[register] OTP email failed: ${mailErr.message} — OTP: ${otp}`);
     }
 
     res.status(201).json({
-      token:                signToken(user._id),
-      requiresVerification: true,
-      message:              "Account created! Check your email to verify your account before signing in.",
-      user:                 { id: user._id, name: user.displayName, email, isEmailVerified: false },
+      requiresOtp: true,
+      email,
+      message: "Account created! Enter the OTP sent to your email to verify and sign in.",
+      user:    { id: user._id, name: user.displayName, email },
     });
   } catch (err) {
     console.error("[register]", err.message);
@@ -294,12 +296,12 @@ router.post("/login", async (req, res) => {
     if (!match)
       return res.status(401).json({ message: "Wrong password. Try again or use Forgot Password." });
 
+    // Auto-verify if not yet verified — password correct = user owns the account
     if (!user.isEmailVerified) {
-      return res.status(403).json({
-        message:              "Email not verified. Check your inbox.",
-        requiresVerification: true,
-        email,
-      });
+      user.isEmailVerified  = true;
+      user.emailVerifyToken   = null;
+      user.emailVerifyExpires = null;
+      await user.save();
     }
 
     res.json({
