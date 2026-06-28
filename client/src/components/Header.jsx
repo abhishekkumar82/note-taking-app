@@ -174,7 +174,7 @@ const handleReindex = async () => {
             </button>
 
             <button
-              onClick={() => window.location.href = 'http://localhost:9090/auth/logout'}
+              onClick={() => window.location.href = `${import.meta.env.VITE_API_URL || 'http://localhost:9090'}/auth/logout`}
               className="logout-btn"
               title="Logout"
             >

@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API = "http://localhost:9090";
+const API = import.meta.env.VITE_API_URL || "http://localhost:9090";
 
 const EyeIcon = ({open}) => open ? (
   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

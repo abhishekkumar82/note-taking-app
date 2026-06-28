@@ -4,7 +4,7 @@ import { LogIn } from 'lucide-react';
 const Login = () => {
   const handleLogin = () => {
     // This sends the user to your Node.js server to start the Google flow
-    window.location.href = 'http://localhost:9090/auth/google';
+    window.location.href = `${import.meta.env.VITE_API_URL || 'http://localhost:9090'}/auth/google`;
   };
 
   return (

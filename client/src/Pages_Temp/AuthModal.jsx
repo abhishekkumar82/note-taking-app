@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const API = "http://localhost:9090";
+const API = import.meta.env.VITE_API_URL || "http://localhost:9090";
 
 const GIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" style={{flexShrink:0}}>

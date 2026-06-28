@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }) => {
 
     // Session cookie path (Google OAuth) — ask backend
     axios
-      .get("http://localhost:9090/api/auth/me", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL || 'http://localhost:9090'}/api/auth/me`, { withCredentials: true })
       .then(() => setStatus("ok"))
       .catch(() => setStatus("denied"));
   }, []);
