@@ -1,18 +1,13 @@
 // server/utils/sendEmail.js
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const APP     = "Write Up";
 const FRONT   = process.env.FRONTEND_URL  || "http://localhost:5173";
-const BACKEND = process.env.BACKEND_URL   || "http://localhost:9090";  // for server-side links
-const FROM    = `"${APP}" <${process.env.EMAIL_USER}>`;
+const BACKEND = process.env.BACKEND_URL   || "http://localhost:9090";
+// Use Resend's free onboarding domain until you add a custom domain
+const FROM    = process.env.EMAIL_FROM || "WriteUp <onboarding@resend.dev>";
 
 const html = (body) => `
 <!DOCTYPE html>
@@ -54,103 +49,73 @@ const html = (body) => `
 </html>
 `;
 
+const send = (to, subject, body) =>
+  resend.emails.send({ from: FROM, to, subject, html: html(body) });
+
 // ── 1. Login OTP ──────────────────────────────────────────────────────────────
-exports.sendLoginOtpEmail = async (to, otp) => {
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `${otp} is your ${APP} login code`,
-    html: html(`
-      <p>Your one-time login code for <strong>${APP}</strong> is:</p>
-      <div class="otp">${otp}</div>
-      <p class="note">Valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>
-    `),
-  });
-};
+exports.sendLoginOtpEmail = (to, otp) =>
+  send(to, `${otp} is your ${APP} login code`, `
+    <p>Your one-time login code for <strong>${APP}</strong> is:</p>
+    <div class="otp">${otp}</div>
+    <p class="note">Valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>
+  `);
 
 // ── 2. Email Verification ─────────────────────────────────────────────────────
-exports.sendVerificationEmail = async (to, name, token) => {
-  // IMPORTANT: This must point to the BACKEND server (9090), not the frontend.
-  // The /api/auth/verify-email route is an Express route that redirects to the
-  // frontend after verifying. Pointing to the frontend (5173) returns a 404.
+exports.sendVerificationEmail = (to, name, token) => {
   const link = `${BACKEND}/api/auth/verify-email?token=${token}`;
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `Verify your ${APP} email`,
-    html: html(`
-      <p>Hi <strong>${name}</strong> 👋</p>
-      <p>Welcome to <strong>${APP}</strong>! Please verify your email address to activate your account.</p>
-      <a class="btn" href="${link}">Verify Email →</a>
-      <div class="divider"></div>
-      <p class="note">This link expires in <strong>24 hours</strong>.<br/>
-      If the button doesn't work, copy: <a href="${link}" style="color:#6366f1;word-break:break-all">${link}</a></p>
-    `),
-  });
+  return send(to, `Verify your ${APP} email`, `
+    <p>Hi <strong>${name}</strong> 👋</p>
+    <p>Welcome to <strong>${APP}</strong>! Please verify your email address to activate your account.</p>
+    <a class="btn" href="${link}">Verify Email →</a>
+    <div class="divider"></div>
+    <p class="note">This link expires in <strong>24 hours</strong>.<br/>
+    If the button doesn't work, copy: <a href="${link}" style="color:#6366f1;word-break:break-all">${link}</a></p>
+  `);
 };
 
 // ── 3. Password Reset ─────────────────────────────────────────────────────────
-exports.sendPasswordResetEmail = async (to, name, token) => {
+exports.sendPasswordResetEmail = (to, name, token) => {
   const link = `${FRONT}/reset-password?token=${token}`;
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `Reset your ${APP} password`,
-    html: html(`
-      <p>Hi <strong>${name}</strong>,</p>
-      <p>We received a request to reset your password. Click below to choose a new one.</p>
-      <a class="btn" href="${link}">Reset Password →</a>
-      <div class="divider"></div>
-      <p class="note">This link expires in <strong>1 hour</strong>.<br/>
-      If you didn't request this, ignore this email — your password won't change.</p>
-    `),
-  });
+  return send(to, `Reset your ${APP} password`, `
+    <p>Hi <strong>${name}</strong>,</p>
+    <p>We received a request to reset your password. Click below to choose a new one.</p>
+    <a class="btn" href="${link}">Reset Password →</a>
+    <div class="divider"></div>
+    <p class="note">This link expires in <strong>1 hour</strong>.<br/>
+    If you didn't request this, ignore this email — your password won't change.</p>
+  `);
 };
 
 // ── 4. Diary PIN Reset OTP ────────────────────────────────────────────────────
-exports.sendDiaryPinResetEmail = async (to, name, otp) => {
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `${APP} — Your Diary PIN reset code`,
-    html: html(`
-      <p>Hi <strong>${name}</strong>,</p>
-      <p>Here is your 6-digit code to reset your <strong>Diary PIN</strong>:</p>
-      <div class="otp">${otp}</div>
-      <p class="note">Valid for <strong>10 minutes</strong>. Your diary entries are safe — this only resets your PIN.</p>
-    `),
-  });
-};
+exports.sendDiaryPinResetEmail = (to, name, otp) =>
+  send(to, `${APP} — Your Diary PIN reset code`, `
+    <p>Hi <strong>${name}</strong>,</p>
+    <p>Here is your 6-digit code to reset your <strong>Diary PIN</strong>:</p>
+    <div class="otp">${otp}</div>
+    <p class="note">Valid for <strong>10 minutes</strong>. Your diary entries are safe — this only resets your PIN.</p>
+  `);
 
 // ── 5. Welcome ────────────────────────────────────────────────────────────────
-exports.sendWelcomeEmail = async (to, name) => {
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `Welcome to ${APP}! 🎉`,
-    html: html(`
-      <p>Hi <strong>${name}</strong> 🎉</p>
-      <p>Your email is verified and your ${APP} account is ready. Start taking notes, tracking habits, and building your personal diary.</p>
-      <a class="btn" href="${FRONT}/dashboard">Open ${APP} →</a>
-    `),
-  });
-};
+exports.sendWelcomeEmail = (to, name) =>
+  send(to, `Welcome to ${APP}! 🎉`, `
+    <p>Hi <strong>${name}</strong> 🎉</p>
+    <p>Your email is verified and your ${APP} account is ready. Start taking notes, tracking habits, and building your personal diary.</p>
+    <a class="btn" href="${FRONT}/dashboard">Open ${APP} →</a>
+  `);
 
-// ── 6. FEATURE 2: 10-minute reminder warning ──────────────────────────────────
-// Sent once when a note's reminder is ≤10 minutes away.
-// The cron job in cronJobs.js calls this and sets reminderEmailSent=true
-// so it never fires twice for the same reminder.
-exports.sendReminderWarningEmail = async (to, name, noteTitle, reminderTime) => {
+// ── 6. Reminder warning ───────────────────────────────────────────────────────
+exports.sendReminderWarningEmail = (to, name, noteTitle, reminderTime) => {
   const timeStr = new Date(reminderTime).toLocaleTimeString("en-IN", {
     hour: "2-digit", minute: "2-digit",
   });
-  await transporter.sendMail({
-    from: FROM, to,
-    subject: `⏰ Reminder in 10 minutes — ${noteTitle}`,
-    html: html(`
-      <p>Hi <strong>${name}</strong>,</p>
-      <div class="alert-box">
-        <h3>⏰ Reminder in ~10 minutes</h3>
-        <p><strong>${noteTitle}</strong> is due at ${timeStr}</p>
-      </div>
-      <p>Head over to your dashboard to review this note before the reminder fires.</p>
-      <a class="btn" href="${FRONT}/dashboard">Open ${APP} →</a>
-      <p class="note">You're receiving this because you set a reminder in ${APP}.</p>
-    `),
-  });
+  return send(to, `⏰ Reminder in 10 minutes — ${noteTitle}`, `
+    <p>Hi <strong>${name}</strong>,</p>
+    <div class="alert-box">
+      <h3>⏰ Reminder in ~10 minutes</h3>
+      <p><strong>${noteTitle}</strong> is due at ${timeStr}</p>
+    </div>
+    <p>Head over to your dashboard to review this note before the reminder fires.</p>
+    <a class="btn" href="${FRONT}/dashboard">Open ${APP} →</a>
+    <p class="note">You're receiving this because you set a reminder in ${APP}.</p>
+  `);
 };
