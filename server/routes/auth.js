@@ -51,10 +51,12 @@ const MAX_OTP_ATTEMPTS = 5;
 router.get("/google", passport.authenticate("google", { scope: ["email", "profile"] }));
 
 router.get("/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: `${FRONTEND}/`,
-    successRedirect: `${FRONTEND}/dashboard`,
-  })
+  passport.authenticate("google", { failureRedirect: `${FRONTEND}/` }),
+  (req, res) => {
+    // Generate JWT so the frontend can authenticate cross-domain
+    const token = signToken(req.user._id);
+    res.redirect(`${FRONTEND}/dashboard?token=${token}`);
+  }
 );
 
 router.get("/logout", (req, res) => {

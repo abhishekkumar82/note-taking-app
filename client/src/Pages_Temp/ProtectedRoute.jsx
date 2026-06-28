@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-// ── ProtectedRoute ────────────────────────────────────────────────────────────
-// Wraps any route that requires authentication.
-// Checks BOTH:
-//   1. JWT in localStorage (email/phone login)
-//   2. Session cookie (Google OAuth)
-// Falls back to landing page if neither exists.
-
 const ProtectedRoute = ({ children }) => {
-  const [status, setStatus] = useState("checking"); // "checking" | "ok" | "denied"
+  const [status, setStatus] = useState("checking");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const token = localStorage.getItem("wu_token");
-
-    if (token) {
-      // JWT path — quick check
+    // Google OAuth callback passes ?token=JWT — save it and clean the URL
+    const urlToken = searchParams.get("token");
+    if (urlToken) {
+      localStorage.setItem("wu_token", urlToken);
+      searchParams.delete("token");
+      setSearchParams(searchParams, { replace: true });
       setStatus("ok");
       return;
     }
 
-    // Session cookie path (Google OAuth) — ask backend
+    const token = localStorage.getItem("wu_token");
+    if (token) {
+      setStatus("ok");
+      return;
+    }
+
+    // Fallback: session cookie check (local dev Google OAuth)
     axios
       .get(`${import.meta.env.VITE_API_URL || 'http://localhost:9090'}/api/auth/me`, { withCredentials: true })
       .then(() => setStatus("ok"))
