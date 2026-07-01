@@ -121,7 +121,7 @@ const SortableNoteCard = ({ note, ...props }) => {
   );
 };
 
-const VALID_SECTIONS = ["notes","diary","habits","reminders","archive","trash","premium"];
+const VALID_SECTIONS = ["notes","diary","habits","reminders","archive","trash"];
 
 const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -193,7 +193,7 @@ const handleSetActiveSection = (section) => {
 
   if (section === "premium") {
     setShowPremiumModal(true);
-    return;
+    return; // don't change activeSection or URL
   }
 
   setActiveSection(section);
@@ -684,7 +684,7 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
       {/* ── Premium Full-Screen Modal ─────────────────────────────────────── */}
       {showPremiumModal && (
         <div
-          onClick={() => setShowPremiumModal(false)}
+          onClick={() => { setShowPremiumModal(false); setSearchParams({}, { replace: true }); }}
           style={{
             position: "fixed", inset: 0, zIndex: 9998,
             background: "rgba(15,23,42,0.55)",
@@ -710,7 +710,7 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
           >
             {/* Close button */}
             <button
-              onClick={() => setShowPremiumModal(false)}
+              onClick={() => { setShowPremiumModal(false); setSearchParams({}, { replace: true }); }}
               style={{
                 position: "sticky", top: 12, float: "right", marginRight: 12,
                 zIndex: 10, background: "rgba(255,255,255,0.15)",
@@ -723,7 +723,7 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
             >
               ×
             </button>
-            <PremiumPage onClose={() => setShowPremiumModal(false)} />
+            <PremiumPage onClose={() => { setShowPremiumModal(false); setSearchParams({}, { replace: true }); }} />
           </div>
         </div>
       )}
