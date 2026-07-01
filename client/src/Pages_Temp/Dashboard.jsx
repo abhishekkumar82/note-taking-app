@@ -155,6 +155,7 @@ const { isOnline, syncStatus, pendingCount, manualSync } = useOfflineSync({ show
   const [premiumGate, setPremiumGate] = useState({ show: false, featureName: "" });
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [trialBannerDismissed, setTrialBannerDismissed] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
   const { isPremium, isTrial, trialEndsAt, loading: premiumLoading } = usePremium();
 
   const notifyCountRef = useRef({});
@@ -190,8 +191,12 @@ const handleSetActiveSection = (section) => {
     return;
   }
 
+  if (section === "premium") {
+    setShowPremiumModal(true);
+    return;
+  }
+
   setActiveSection(section);
-  // Sync URL — /dashboard?page=diary etc. (omit for default "notes")
   if (section === "notes") {
     setSearchParams({}, { replace: true });
   } else {
@@ -562,11 +567,10 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
             </button>
           </div>
         )}
-        {activeSection === "premium" && <PremiumPage showToastMsg={showToastMsg} />}
         {activeSection === "diary"   && <DiaryPage     showToastMsg={showToastMsg} userId={userName} />}
         {activeSection === "habits"  && <HabitTracker  showToastMsg={showToastMsg} />}
 
-        {!isSpecial && activeSection !== "premium" && (
+        {!isSpecial && (
           <>
 {activeSection === "notes" && (
   <div className="add-note-area">
@@ -675,6 +679,53 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
           featureName={premiumGate.featureName}
           onClose={closePremiumGate}
         />
+      )}
+
+      {/* ── Premium Full-Screen Modal ─────────────────────────────────────── */}
+      {showPremiumModal && (
+        <div
+          onClick={() => setShowPremiumModal(false)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 9998,
+            background: "rgba(15,23,42,0.55)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "16px",
+            animation: "pgm-in 0.2s ease",
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 780,
+              maxHeight: "92vh",
+              overflowY: "auto",
+              borderRadius: 24,
+              boxShadow: "0 40px 120px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08)",
+              animation: "pgm-slide 0.28s cubic-bezier(0.34,1.56,0.64,1)",
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setShowPremiumModal(false)}
+              style={{
+                position: "sticky", top: 12, float: "right", marginRight: 12,
+                zIndex: 10, background: "rgba(255,255,255,0.15)",
+                backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "50%", width: 36, height: 36, cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#fff", fontSize: 18, lineHeight: 1,
+              }}
+              title="Close"
+            >
+              ×
+            </button>
+            <PremiumPage onClose={() => setShowPremiumModal(false)} />
+          </div>
+        </div>
       )}
 
       {/* ── Toasts / Modals ────────────────────────────────────────────────── */}
