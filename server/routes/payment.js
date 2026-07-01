@@ -122,10 +122,8 @@ router.get("/status", isLoggedIn, async (req, res) => {
     // backfill it based on createdAt so existing users also get a trial
     let trialEndsAt = user.trialEndsAt;
     if (!trialEndsAt && !user.isPremium) {
-      const fullUser  = await User.findById(req.user._id).select("createdAt");
-      const computed  = new Date(fullUser.createdAt.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
+      const computed  = new Date(now.getTime() + TRIAL_DAYS * 24 * 60 * 60 * 1000);
       trialEndsAt     = computed;
-      // Save it so we don't recompute every time
       await User.findByIdAndUpdate(req.user._id, { trialEndsAt: computed });
     }
 
