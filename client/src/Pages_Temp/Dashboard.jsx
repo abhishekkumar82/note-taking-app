@@ -154,6 +154,7 @@ const { isOnline, syncStatus, pendingCount, manualSync } = useOfflineSync({ show
   // ── Premium gate state ────────────────────────────────────────────────────
   const [premiumGate, setPremiumGate] = useState({ show: false, featureName: "" });
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [trialBannerDismissed, setTrialBannerDismissed] = useState(false);
   const { isPremium, isTrial, trialEndsAt, loading: premiumLoading } = usePremium();
 
   const notifyCountRef = useRef({});
@@ -501,51 +502,71 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
 
       <main className={`main-fullwidth ${activeSection === "diary" ? "diary-bg" : ""}`}>
         {/* ── Trial Banner ───────────────────────────────────────────────── */}
-        {isTrial && (
+        {isTrial && !trialBannerDismissed && (
           <div style={{
             width: "100%",
-            padding: "12px 20px",
-            background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+            padding: "9px 16px",
+            background: "linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "12px",
+            gap: "10px",
             flexWrap: "wrap",
             boxSizing: "border-box",
-            position: "sticky",
-            top: 0,
-            zIndex: 80,
+            position: "relative",
           }}>
-            <span style={{ color: "#fff", fontSize: 13.5, fontWeight: 500 }}>
-              🎁 Free trial —{" "}
-              <strong style={{ fontWeight: 800 }}>
+            <span style={{ fontSize: 15 }}>🎁</span>
+            <span style={{ color: "rgba(255,255,255,0.9)", fontSize: 13, fontWeight: 400 }}>
+              Your free trial ends in{" "}
+              <strong style={{ color: "#fff", fontWeight: 700 }}>
                 {trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}
-              </strong>{" "}
-              remaining. Unlock all features forever.
+              </strong>
+              . Upgrade to keep full access.
             </span>
             <button
               onClick={() => handleSetActiveSection("premium")}
               style={{
-                background: "#fff",
-                color: "#6366f1",
-                border: "none",
-                borderRadius: 8,
-                padding: "6px 16px",
-                fontSize: 13,
-                fontWeight: 700,
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.4)",
+                borderRadius: 6,
+                padding: "4px 14px",
+                fontSize: 12,
+                fontWeight: 600,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
                 fontFamily: "inherit",
+                backdropFilter: "blur(4px)",
               }}
             >
               Upgrade now →
             </button>
+            <button
+              onClick={() => setTrialBannerDismissed(true)}
+              style={{
+                position: "absolute",
+                right: 12,
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                color: "rgba(255,255,255,0.6)",
+                fontSize: 16,
+                cursor: "pointer",
+                lineHeight: 1,
+                padding: "2px 6px",
+              }}
+              title="Dismiss"
+            >
+              ×
+            </button>
           </div>
         )}
+        {activeSection === "premium" && <PremiumPage showToastMsg={showToastMsg} />}
         {activeSection === "diary"   && <DiaryPage     showToastMsg={showToastMsg} userId={userName} />}
         {activeSection === "habits"  && <HabitTracker  showToastMsg={showToastMsg} />}
 
-        {!isSpecial && (
+        {!isSpecial && activeSection !== "premium" && (
           <>
 {activeSection === "notes" && (
   <div className="add-note-area">
