@@ -465,48 +465,6 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
 
   return (
     <>
-    {/* ── Trial Banner ─────────────────────────────────────────────────────── */}
-    {isTrial && (
-      <div style={{
-        width: "100%",
-        padding: "12px 20px",
-        background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "12px",
-        flexWrap: "wrap",
-        position: "sticky",
-        top: 64,
-        zIndex: 90,
-        boxSizing: "border-box",
-      }}>
-        <span style={{ color: "#fff", fontSize: 13.5, fontWeight: 500 }}>
-          🎁 Free trial —{" "}
-          <strong style={{ fontWeight: 800 }}>
-            {trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}
-          </strong>{" "}
-          remaining. Unlock all features forever.
-        </span>
-        <button
-          onClick={() => handleSetActiveSection("premium")}
-          style={{
-            background: "#fff",
-            color: "#6366f1",
-            border: "none",
-            borderRadius: 8,
-            padding: "6px 16px",
-            fontSize: 13,
-            fontWeight: 700,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            fontFamily: "inherit",
-          }}
-        >
-          Upgrade now →
-        </button>
-      </div>
-    )}
     <OfflineIndicator
   isOnline={isOnline}
   syncStatus={syncStatus}
@@ -542,6 +500,48 @@ const handleUpdateNote = async (id, title, body, color, reminder, repeat, isPinn
       />
 
       <main className={`main-fullwidth ${activeSection === "diary" ? "diary-bg" : ""}`}>
+        {/* ── Trial Banner ───────────────────────────────────────────────── */}
+        {isTrial && (
+          <div style={{
+            width: "100%",
+            padding: "12px 20px",
+            background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "12px",
+            flexWrap: "wrap",
+            boxSizing: "border-box",
+            position: "sticky",
+            top: 0,
+            zIndex: 80,
+          }}>
+            <span style={{ color: "#fff", fontSize: 13.5, fontWeight: 500 }}>
+              🎁 Free trial —{" "}
+              <strong style={{ fontWeight: 800 }}>
+                {trialDaysLeft} day{trialDaysLeft !== 1 ? "s" : ""}
+              </strong>{" "}
+              remaining. Unlock all features forever.
+            </span>
+            <button
+              onClick={() => handleSetActiveSection("premium")}
+              style={{
+                background: "#fff",
+                color: "#6366f1",
+                border: "none",
+                borderRadius: 8,
+                padding: "6px 16px",
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                fontFamily: "inherit",
+              }}
+            >
+              Upgrade now →
+            </button>
+          </div>
+        )}
         {activeSection === "diary"   && <DiaryPage     showToastMsg={showToastMsg} userId={userName} />}
         {activeSection === "habits"  && <HabitTracker  showToastMsg={showToastMsg} />}
 
